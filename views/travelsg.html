@@ -1,0 +1,142 @@
+<html>
+
+<head>
+
+<title>Little Red Dot SG</title>
+<link href="travelsg.css" rel="stylesheet" type="text/css">
+<link href="photoslider.css" rel="stylesheet" type="text/css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+
+<style>
+img 
+ {
+    opacity: 0.7;
+    filter: alpha(opacity=40); 
+}
+  img:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=100);}
+</style>
+
+</head>
+
+<!--main content-->
+<body>
+<a href="travelsg.html"><img src="Logo/logowithb.png" width="155px" height="150px" align="left"><br></a> &nbsp; &nbsp; &nbsp; 
+	 
+   <div id="nav" class="container">
+      <h1>
+     <ul>
+  <li><a href="travelsg.html"><button type="button" class="btn-default">Home</a></li></button>
+  <li><a href="about.html"><button type="button"class="btn-default">About</a></li></button>
+  <li><a href="navigation.html"><button type="button"class="btn-default">Navigation</a></li>
+  </button>
+  <li><a href="stay.html"><button type="button"class="btn-default">Place to Stay</a></li></button>
+  <li><a href="see.html"><button type="button"class="btn-default">Place  to See</a></li></button>
+  <li><a href="help.html"><button type="button"class="btn-default">Contact Us</a></li></button>
+     </h1>
+      </ul>
+      </div>
+
+
+<br>
+<br>
+
+  <marquee><h5>Welcome to Little. <span style="color:red">Red</span>. Dot. </h5></marquee>
+  
+ 	
+<!-- slideshow-->
+
+<div class="slideshow-container">
+
+<div class="mySlides fade">
+  <div class="numbertext">1 / 6</div>
+  <img src="photohome/sg2.jpg" style="width:100%">
+  <div class="text">Caption Text</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">2 / 6</div>
+  <img src="photohome/sg1.jpg" style="width:100%">
+  <div class="text">Caption Two</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">3 / 6</div>
+  <img src="photohome/sg5.jpg"style="width:100%">
+  <div class="text">Caption Three</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">4 / 6</div>
+  <img src="photohome/sg4.jpg"style="width:100%">
+  <div class="text">Caption Three</div>
+</div>
+
+<div class="mySlides fade">
+  <div class="numbertext">5 / 6</div>
+  <img src="photohome/sg3.jpg"style="width:100%">
+  <div class="text">Caption Three</div>
+</div>
+<div class="mySlides fade">
+  <div class="numbertext">6 / 6</div>
+  <img src="stayphotos/mbs3.jpg"style="width:100%">
+  <div class="text">Caption Three</div>
+</div>
+
+
+<a class="prev" onclick="plusSlides(-1)">❮</a>
+<a class="next" onclick="plusSlides(1)">❯</a>
+
+</div>
+<br>
+
+<div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span>
+   <span class="dot" onclick="currentSlide(4)"></span> 
+     <span class="dot" onclick="currentSlide(5)"></span> 
+       <span class="dot" onclick="currentSlide(6)"></span>  
+</div>
+
+
+<script>
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length} ;
+  for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+</script>
+
+</body>
+<!--footer-->
+<footer>
+<p>Copyright &copy 2016 All Right Reserved:BetaLittle.Red.Dot.com</p>
+<a href="#top">Go to top</a>
+</footer>
+</body>
+</html
