@@ -1,16 +1,32 @@
 {
-  "name": "ict302project",
+  "name": "fapp",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.3",
+    "bcrypt": "^3.0.2",
+    "bcrypt-nodejs": "0.0.3",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
     "debug": "~2.6.9",
-    "express": "~4.16.0",
-    "hbs": "~4.0.1",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
     "http-errors": "~1.6.2",
-    "morgan": "~1.9.0"
+    "jsonwebtoken": "^8.3.0",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.4",
+    "npm-watch": "^0.4.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^6.4.2",
+    "pug": "2.0.0-beta11",
+    "req-flash": "0.0.3",
+    "sequelize": "^4.41.0"
   }
 }
