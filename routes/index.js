@@ -49,6 +49,10 @@ router.get('/dashboard', (req, res) => {
   }
 });
 
+router.get('/testlog', function(req, res){
+  res.render('home');
+});
+
 
 
 

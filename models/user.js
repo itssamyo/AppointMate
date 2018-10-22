@@ -34,20 +34,15 @@ User.prototype.validPassword = function(password){
   
   
   //force: true will drop the table if it already exists
-  // User.sync({force: true}).then(() => {
-  //   // Table created
-  //   const x = bcrypt.hashSync('1234');
-  //     User.create({
-  //     username: 'john',
-  //     password: x
-  //   });
-  //   const y = bcrypt.hashSync('1234');
-  //     User.create({    
-  //       username: 'mary',
-  //       password: y
-  //     });
-  
-  // });
+  User.sync({force: true}).then(() => {
+    // Table created
+    const x = bcrypt.hashSync('1234');
+      User.create({
+      username: 'john',
+      password: x,
+      email: 'john@mail.com'
+    });
+  });
 
   sequelize.sync()
     .then(() => console.log('users table has been successfully created, if one doesn\'t exist'))
