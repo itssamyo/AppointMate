@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>AppointMate</title>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="style.css" rel="stylesheet" type="text/css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+<style>
+/*-- Menu Button --*/
+.btn
+{
+	border: none;
+	color: white;
+	padding: 14px 28px;
+	font-size: 18px;
+}
+
+.danger {background-color: #BE3D3C;}
+.danger:hover{background-color: #333333; color: white;}
+
+/*-- Navigation bar --*/
+.navbar-inverse
+{
+    background-color:#333333;
+	width: 100%;	
+}
+.container{margin-left: 200px;  }
+
+
+
+</style>
+</head>
+
+<body>
+		<!-- Logo -->
+<img src="images/Logo.jpeg" width="155px" height="150px" algin="left"> 
+	
+		<!-- Navigation Bar -->
+	<div class= "container-fluid">
+		<nav class="navbar navbar-inverse">
+		    <ul class="nav navbar-nav">
+				<li><a href="#">Create New Meeting </a></li>
+				<li><a href="#">Upload File</a></li>
+				<li><a href="#">Export ICS File</a></li>
+			  </ul>
+		   <ul class="nav navbar-nav navbar-right">				  
+			<li><a href="#"><span class="glyphicon glyphicon-user"></span>System Administrator</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+		  </ul>
+	  </nav>
+	 </div>	   
+<!-- Navigation Bar Left -->		
+ <div class="nav nav-bar navbar-left"> 
+		<div class="col-sm-2 sidenav"> 	 
+	<div class="btn-group-vertical">
+	<button class="btn danger">Dashboard			</button><br>
+    <button class="btn danger">Meeting				</button><br>
+	<button class="btn danger">Manage Account		</button><br>   
+	</div>
+</div>
+ </div>
+
+ <!-- Create Acc-->
+	
+	<h1>Create Accounts</h1>
+			<form action="/action_page.php" id="myForm">
+			  <label for="fname">First Name &#x2217</label>
+			  <input type="text" id="fname" name="firstname" placeholder="E.g Tom"> 
+		  
+			  <label for="lname">Last Name &#x2217</label>
+			  <input type="text" id="lname" name="lastname" placeholder="E.g Lee"> <p>
+			  
+			  <label for="password">Password &#x2217</label>
+			  <input type="text" id="lname" name="Password" placeholder="xxxxxxxx">
+
+			  <label for="Email">Email &#x2217</label>
+			  <input type="text" id="Email" name="Email" placeholder="xxxxxxxx">  <p>
+
+			  <label for="Role">Role &#x2217</label>
+			  <input type="text" id="Role" name="Role" placeholder="E.g Convener/Organizer Account">
+			  
+			<br>
+			  <input type="submit" value="Submit">
+			  <input type="clear" onclick="clear()" value="Clear">
+			</form>
+	
+			<script>
+			function clear()
+			{
+			document.getElementById("myForm").reset();
+			}
+			</script>
+
+	 <!-- Create Table-->
+
+	<h1>Previous Meetings</h1>
+<div class="table-responsive">          
+		<table class="table">
+		  <thead>
+			<tr>
+			  <th>Name</th>
+			  <th>Status</th>
+			  <th>Date/Time</th>
+			  <th>Comments</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr>
+			  <td>Barry Allen</td>
+			  <td>Confirm</td>
+			  <td>15 Sep,9:00-9:30AM</td>
+			  <td>ICT302 Project Question</td>
+			</tr>
+		  </tbody>
+		</table>
+		</div>
+	  </div>
+
+</body>
+
+</html>
