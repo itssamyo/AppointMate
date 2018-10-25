@@ -5,7 +5,7 @@
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link href="style.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -26,11 +26,11 @@
 
 /*-- Navigation bar --*/
 .navbar-inverse
-{
+{margin-left: 160px;
     background-color:#333333;
 	width: 100%;	
 }
-.container{margin-left: 200px;  }
+.container{margin-left: 200px; text-align: center;}
 
 
 
@@ -67,8 +67,13 @@
  </div>
 
  <!-- Create Acc-->
+	 
 	
-	<h1>Create Accounts</h1>
+	  
+ 	 <div class="container">
+			
+			<h1>Create Accounts</h1>
+			<fieldset>
 			<form action="/action_page.php" id="myForm">
 			  <label for="fname">First Name &#x2217</label>
 			  <input type="text" id="fname" name="firstname" placeholder="E.g Tom"> 
@@ -96,9 +101,10 @@
 			document.getElementById("myForm").reset();
 			}
 			</script>
-
+			</fieldset>
+ 	 </div>
 	 <!-- Create Table-->
-
+<div class="container">
 	<h1>Previous Meetings</h1>
 <div class="table-responsive">          
 		<table class="table">
@@ -121,7 +127,7 @@
 		</table>
 		</div>
 	  </div>
-
+	</div>
 </body>
 
 </html>
