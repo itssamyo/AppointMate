@@ -14,6 +14,7 @@ const Attendee = require('../models/attendee');
 // const UserMeeting = require('../models/usermeeting');
 
 
+
 // sequelize
 //   .authenticate()
 //   .then(() => {
@@ -38,12 +39,9 @@ router.get('/', sessionChecker, (req, res) => {
 
 
 router.get('/home', function(req, res, next) {
-  res.render('index');
+  res.render('home');
 });
 
-// router.get('/get-data', function(req, res, next){
-//   console.log('get data: ');
-//   var arr = [];
 
 
 router.get('/dashboard', (req, res) => {
@@ -54,9 +52,7 @@ router.get('/dashboard', (req, res) => {
   }
 });
 
-router.get('/testlog', function(req, res){
-  res.render('home');
-});
+
 
 
 

@@ -25,7 +25,7 @@ const UserMeeting = sequelize.define('usermeeting', {
     }
 });
 
-sequelize.sync().then(() => console.log('[[usermeet table has been successfully created, if one doesn\'t exist]]'))
-.catch(error => console.log('usermeet error occured', error));;
+// sequelize.sync().then(() => console.log('[[usermeet table has been successfully created, if one doesn\'t exist]]'))
+// .catch(error => console.log('usermeet error occured', error));;
 
 module.exports = UserMeeting;

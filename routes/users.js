@@ -19,6 +19,7 @@ router.get('/get', User.list);
 
 
 router.post('/login', User.login);
+// router.post('/testlog', User.login);
 
 
 router.get('/logout', (req, res) => {
