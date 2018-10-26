@@ -31,6 +31,7 @@ module.exports = {
       });
     }
 
+//...............
     // login(req, res){
     //     var item = {
     //         user: req.body.username,

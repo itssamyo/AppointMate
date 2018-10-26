@@ -7,7 +7,6 @@ var hbs = require('express-handlebars');
 var config = require('./config/index');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-var User = require('./models/user');
 var session = require('express-session');
 
 var indexRouter = require('./routes/index');
