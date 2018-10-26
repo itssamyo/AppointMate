@@ -3,8 +3,8 @@ var router = express.Router();
 var jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
-// const Use = require('../models/user');
-const User = require('../controllers/user')
+// const User = require('../models/user');
+const User = require('../controllers/user');
 
 
 

@@ -6,7 +6,7 @@ div
 
 h1{text-align: center;font-family:Helvetica; font-weight: 600;}
 
-input[type=text], select 
+/*input[type=text], input[type=password], select 
 {
     width:30%;
     padding: 10px 10px;
@@ -16,7 +16,7 @@ input[type=text], select
     border-radius: 4px;
     box-sizing: border-box;
     background: #DEE1E6;
-}
+}*/
 
 input[type=submit] {
     width: 20%;

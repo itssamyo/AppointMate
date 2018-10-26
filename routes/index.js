@@ -7,19 +7,24 @@ const path = require('path');
 var jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
+const User = require('../models/user');
+const Slot = require('../models/slot');
+const Meeting = require('../models/meeting');
+const Attendee = require('../models/attendee');
+// const UserMeeting = require('../models/usermeeting');
 
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+// sequelize
+//   .authenticate()
+//   .then(() => {
+//     console.log('Connection has been established successfully.');
+//   })
+//   .catch(err => {
+//     console.error('Unable to connect to the database:', err);
+//   });
 
 
-  var sessionChecker = (req, res, next) => {
+var sessionChecker = (req, res, next) => {
     if (req.session.user && req.cookies.user_sid) {
         res.redirect('/dashboard');
     } else {
