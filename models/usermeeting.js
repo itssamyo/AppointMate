@@ -7,6 +7,7 @@ const UserMeeting = sequelize.define('usermeeting', {
     uId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
         foreignKey: true,
         unique: false,
         references: {
@@ -17,7 +18,9 @@ const UserMeeting = sequelize.define('usermeeting', {
     mId:{
         type: Sequelize.INTEGER,
         allowNull: false,
+        primaryKey: true,
         foreignKey: true,
+        unique: false,
         references: {
             model: Meeting,
             key: 'mId'
@@ -26,6 +29,6 @@ const UserMeeting = sequelize.define('usermeeting', {
 });
 
 // sequelize.sync().then(() => console.log('[[usermeet table has been successfully created, if one doesn\'t exist]]'))
-// .catch(error => console.log('usermeet error occured', error));;
+// .catch(error => console.log('usermeet error occured', error));
 
 module.exports = UserMeeting;

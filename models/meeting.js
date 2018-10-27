@@ -31,8 +31,8 @@ const Meeting = sequelize.define('meetings', {
     }
 });
 
-sequelize.sync({force: true})
-    .then(() => console.log('[[Meeting table has been successfully created, if one doesn\'t exist]]'))
-    .catch(error => console.log('This error occured', error));
+// sequelize.sync()
+//     .then(() => console.log('[[Meeting table has been successfully created, if one doesn\'t exist]]'))
+//     .catch(error => console.log('This error occured', error));
 
 module.exports = Meeting;

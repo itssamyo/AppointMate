@@ -11,8 +11,27 @@ const User = require('../models/user');
 const Slot = require('../models/slot');
 const Meeting = require('../models/meeting');
 const Attendee = require('../models/attendee');
-// const UserMeeting = require('../models/usermeeting');
+var bcrypt = require('bcryptjs');
+const UserMeeting = require('../models/usermeeting');
 
+
+  User.sync();
+  Meeting.sync();
+  Slot.sync();
+  Attendee.sync();
+  UserMeeting.sync();  
+  const x = bcrypt.hashSync('1234');
+  User.findOrCreate({
+      where: {
+          username: 'john'
+        }, 
+      defaults: {
+          job: 'Technical Lead JavaScript',
+          password: x,
+        email: 'john@mail.com',
+        uType: 'admin'
+        }
+    });
 
 
 // sequelize
@@ -39,9 +58,19 @@ router.get('/', sessionChecker, (req, res) => {
 
 
 router.get('/home', function(req, res, next) {
-  res.render('home');
+  res.render('home',{ error: req.session.error });
 });
 
+router.get('/admin', function(req, res){
+    if(req.session.user){
+        if(req.session.user.uType =='admin'){
+            res.render('admin');
+        }
+    }
+    else{
+        res.status(404).send('Not found');        
+    }
+});
 
 
 router.get('/dashboard', (req, res) => {

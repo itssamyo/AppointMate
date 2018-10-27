@@ -7,10 +7,8 @@ module.exports = {
     list(req, res) {
          User.findAll({
             attributes: ['username', 'password']
-          }).then(result => {
-        
-            console.log(result);
-        
+          }).then(result => {        
+            console.log(result);        
             res.json(result);
           });
     },
@@ -18,15 +16,20 @@ module.exports = {
     login(req, res){
       var username = req.body.username,
             password = req.body.password;
-            console.log('username: '+username);
-            console.log('password: '+password);
+            
 
-        User.findOne({ where: { username: username } }).then(function (user) {
+        User.findOne({ where: { username: username } }).then(function (user) {            
           if (!user) {
+              req.session.error = 'username is not found';
               res.redirect('/home');
-          }else if(!user.validPassword(password)){        
+          }else if(!user.validPassword(password)){
+              req.session.error = 'Incorrect password';        
               res.redirect('/home');
-          } else {
+          }else if(user.uType == 'admin'){
+            req.session.user = user.dataValues; 
+            res.redirect('/admin');
+          } 
+          else {
               req.session.user = user.dataValues;
               res.redirect('/dashboard');
           }

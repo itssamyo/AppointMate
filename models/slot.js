@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
+const Meeting = require('../models/meeting');
 
 const Slot = sequelize.define('slots', {
     sId: {
@@ -7,6 +8,14 @@ const Slot = sequelize.define('slots', {
         primaryKey: true,
         autoIncrement: true
     },
+    mId: {
+        type: Sequelize.INTEGER,
+        foreignKey: true,
+        references: {
+            model: Meeting,
+            key: 'mId'
+        }
+      },
     sStart: {
         type: Sequelize.STRING,
         allowNull: true
@@ -22,8 +31,8 @@ const Slot = sequelize.define('slots', {
     timestamp: Sequelize.DATE
 });
 
-sequelize.sync({force: true})
-    .then(() => console.log('[[Slot table has been successfully created, if one doesn\'t exist]]'))
-    .catch(error => console.log('Slot table  error occured', error));
+// sequelize.sync()
+//     .then(() => console.log('[[Slot table has been successfully created, if one doesn\'t exist]]'))
+//     .catch(error => console.log('Slot table  error occured', error));
 
     module.exports = Slot;

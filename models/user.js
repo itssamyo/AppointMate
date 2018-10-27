@@ -51,35 +51,35 @@ User.prototype.validPassword = function(password){
   
   
   //force: true will drop the table if it already exists
-  User.sync({force: true}).then(() => {
-    // Table created
-    const x = bcrypt.hashSync('1234');
-      User.create({
-      username: 'john',
-      password: x,
-      email: 'john@mail.com',
-      uType: 'admin'
-    }).then(function(user) {
-      // you can now access the newly created task via the variable task
-      console.log('success');
-    })
-    .catch(function(err) {
-        // print the error details
-        console.log(err, request.body.email);
-    });
-  });
+  // User.sync({force: true}).then(() => {
+  //   // Table created
+  //   const x = bcrypt.hashSync('1234');
+  //     User.create({
+  //     username: 'john',
+  //     password: x,
+  //     email: 'john@mail.com',
+  //     uType: 'admin'
+  //   }).then(function(user) {
+  //     // you can now access the newly created task via the variable task
+  //     console.log('success');
+  //   })
+  //   .catch(function(err) {
+  //       // print the error details
+  //       console.log(err, request.body.email);
+  //   });
+  // });
 
-  User.associate = (models) => {
-    Users.belongsToMany(models.Meeting, {
-      through: 'UserMeeting',
-      as: 'meetings',
-      foreignKey: 'userid'
-    });
-  };
+  // User.associate = (models) => {
+  //   Users.belongsToMany(models.Meeting, {
+  //     through: 'UserMeeting',
+  //     as: 'meetings',
+  //     foreignKey: 'userid'
+  //   });
+  // };
   
-  sequelize.sync()
-    .then(() => console.log('[[users table has been successfully created, if one doesn\'t exist]]'))
-    .catch(error => console.log('This error occured', error));
+  // sequelize.sync()
+  //   .then(() => console.log('[[users table has been successfully created, if one doesn\'t exist]]'))
+  //   .catch(error => console.log('This error occured', error));
 
    
 
