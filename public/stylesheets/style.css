@@ -2,19 +2,19 @@ body
 {
     background-attachment: fixed;
     background-position: center;
-    overflow:hidden;
+    /* overflow:hidden; */
 }
 
 h1{text-align: center;font-family:Helvetica; font-weight: 600;}
 
 /*-- Menu Button --*/
-.btn
+/* .btn
 {
 	border: 6px;
 	color: white;
 	padding: 14px 28px;
 	font-size: 18px;
-}
+} */
 .danger {background-color: #BE3D3C;}
 .danger:hover{background-color: #333333; color: white;}
 
@@ -44,9 +44,9 @@ h1{text-align: center;font-family:Helvetica; font-weight: 600;}
 }
 
 /*-- Container for 'Nav Bar' -- */
-.container-fluid{position:fixed; width:80%;}
+/* .container-fluid{position:fixed; width:80%;} */
 /*-- Container for 'Form & Table' --*/
-.container{margin-left: 200px; text-align-last: center; padding-left:200px; }
+/* .container{margin-left: 200px; text-align-last: center; padding-left:200px; } */
 
 /*-- for form box  --*/
 /* input[type=text], select 

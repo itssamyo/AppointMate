@@ -23,16 +23,38 @@ const UserMeeting = require('../models/usermeeting');
   const x = bcrypt.hashSync('1234');
   User.findOrCreate({
       where: {
-          username: 'john'
+          email: 'john@mail.com'
         }, 
       defaults: {
-          job: 'Technical Lead JavaScript',
-          password: x,
-        email: 'john@mail.com',
+        uFname: 'john',
+        password: x,
         uType: 'admin'
         }
     });
+    User.findOrCreate({
+        where: {
+            email: 'adam@mail.com'
+          }, 
+        defaults: {
+          uFname: 'adam',
+          password: x,
+          uType: 'convener'
+          }
+      });
 
+     User.findOrCreate({
+          where: {
+            email: 'sdep@mail.com'
+        },
+       defaults: {
+        uFname: 'sdep',
+        password: x,
+        uType: 'organiser'
+        }
+    }).spread((user, created) => {
+        console.log(user.get({plain: true}))
+        // console.log('created: '+created)
+    });
 
 // sequelize
 //   .authenticate()
@@ -61,17 +83,6 @@ router.get('/home', function(req, res, next) {
   res.render('home',{ error: req.session.error });
 });
 
-router.get('/admin', function(req, res){
-    if(req.session.user){
-        if(req.session.user.uType =='admin'){
-            res.render('admin');
-        }
-    }
-    else{
-        res.status(404).send('Not found');        
-    }
-});
-
 
 router.get('/dashboard', (req, res) => {
   if (req.session.user && req.cookies.user_sid) {
@@ -80,6 +91,7 @@ router.get('/dashboard', (req, res) => {
       res.redirect('/home');
   }
 });
+
 
 
 

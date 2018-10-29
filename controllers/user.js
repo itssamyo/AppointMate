@@ -5,69 +5,80 @@ var config = require('../config/index');
 
 module.exports = {
     list(req, res) {
-         User.findAll({
-            attributes: ['username', 'password']
-          }).then(result => {        
-            console.log(result);        
-            res.json(result);
-          });
+        var exists;
+        if(req.session.alert){
+            exists = req.session.alert;
+        }        
+        if(req.session.user){
+            if(req.session.user.uType =='admin'){
+            User.findAll({
+                attributes: ['email', 'uFname','uType', 'createdAt']
+            }).then(result => {     
+                console.log(result);   
+                res.render('admin-dash', {result, exists});
+            });
+            }
+            else{
+                res.status(404).send('Not found');  
+            }
+        }
+        else{
+            res.status(404).send('Not found'); 
+        }
     },
 
     login(req, res){
-      var username = req.body.username,
-            password = req.body.password;
+      var email = req.body.email,
+          password = req.body.password;
             
 
-        User.findOne({ where: { username: username } }).then(function (user) {            
+        User.findOne({ where: { email: email } }).then(function (user) {            
           if (!user) {
-              req.session.error = 'username is not found';
+              req.session.error = 'Email not found';
               res.redirect('/home');
           }else if(!user.validPassword(password)){
               req.session.error = 'Incorrect password';        
               res.redirect('/home');
           }else if(user.uType == 'admin'){
-            req.session.user = user.dataValues; 
-            res.redirect('/admin');
+            req.session.result = 'sample result';
+            req.session.user = user.dataValues;             
+            res.redirect('/users/admin');
           } 
           else {
               req.session.user = user.dataValues;
               res.redirect('/dashboard');
           }
       });
+    },
+
+    addUser(req, res){
+        var email = req.body.email, password = req.body.password, fname = req.body.fname,
+        lname = req.body.lname, utype = req.body.utype;
+        
+        const x = bcrypt.hashSync(password);        
+        User.findOrCreate({
+            where: {
+              email: req.body.email
+          },
+            defaults: {
+            password: x,
+            uFname: fname,
+            uLname: lname,            
+            uType: utype
+            }
+        }).spread((user, created) => {
+            console.log(user.get({plain: true}))
+            console.log('created: '+created);
+            var exists;
+            if(created == false){
+                exists = true;
+                req.session.alert = exists;
+                res.redirect('/users/admin/dash');
+            }
+            else{                
+                res.redirect('/users/admin/dash');
+            }
+        });       
     }
-
-//...............
-    // login(req, res){
-    //     var item = {
-    //         user: req.body.username,
-    //         passw: req.body.password
-    //     };
-    //     console.log(item);
-    //     User.findOne({
-    //         where: {
-    //           username: item.user
-    //         }
-    //       }).then(user =>{
-    //         if (!user) {
-    //             var message = 'Incorrect credentials';
-    //           return res.json(message);
-    //         }
-    //         else if(!bcrypt.compareSync(item.passw, user.password)){
-    //             var message = 'Incorrect password';
-    //             return res.json(message);
-    //         }
-    //         else{
-    //           // var token = jwt.sign({username: req.body.username, iat: Math.floor(Date.now() / 1000) - 30 }, config.secret);                      
-    //             // res.send({
-    //             //   success: true,
-    //             //   message: 'Login Success!',
-    //             //   data: user,
-    //             //   token: token
-    //             //  });
-    //             res.redirect('/orgn');
-    //         }
-    //      });
-    // }
-    
-
+ 
 };

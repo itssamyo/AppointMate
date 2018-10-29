@@ -12,10 +12,35 @@ const User = require('../controllers/user');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  var item = [ {
+    username: 'sdepold',
+    job: 'Technical Lead JavaScript',
+    id: 1,   
+  },
+  true ];
+
+  res.json(item[0]);
 });
 
-router.get('/get', User.list);
+// router.get('/get', User.list);
+router.get('/get',User.list);
+
+router.get('/admin', function(req, res){
+
+  // console.log('from admin: '+req.session.result);
+
+  if(req.session.user){
+      if(req.session.user.uType =='admin'){          
+          res.redirect('/users/admin/dash');
+      }
+  }
+  else{
+      res.status(404).send('Not found');        
+  }
+});
+
+router.get('/admin/dash',User.list);
+router.post('/admin/addUser', User.addUser);
 
 
 router.post('/login', User.login);
