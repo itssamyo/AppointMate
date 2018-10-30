@@ -11,50 +11,67 @@ const User = require('../models/user');
 const Slot = require('../models/slot');
 const Meeting = require('../models/meeting');
 const Attendee = require('../models/attendee');
-var bcrypt = require('bcryptjs');
 const UserMeeting = require('../models/usermeeting');
+var bcrypt = require('bcryptjs');
 
-
-  User.sync();
-  Meeting.sync();
-  Slot.sync();
-  Attendee.sync();
-  UserMeeting.sync();  
-  const x = bcrypt.hashSync('1234');
-  User.findOrCreate({
-      where: {
-          email: 'john@mail.com'
-        }, 
-      defaults: {
-        uFname: 'john',
-        password: x,
-        uType: 'admin'
-        }
+  User.sync().then(()=>{
+    Meeting.sync().then(()=>{
+        UserMeeting.sync().then(()=>{
+            const x = bcrypt.hashSync('1234');
+            User.findOrCreate({
+                where: {
+                    email: 'john@mail.com'
+                  }, 
+                defaults: {
+                  uFname: 'john',
+                  password: x,
+                  uType: 'admin'
+                  }
+              });
+              User.findOrCreate({
+                  where: {
+                      email: 'adam@mail.com'
+                    }, 
+                  defaults: {
+                    uFname: 'adam',
+                    password: x,
+                    uType: 'convener'
+                    }
+                });
+          
+               User.findOrCreate({
+                    where: {
+                      email: 'sdep@mail.com'
+                  },
+                 defaults: {
+                  uFname: 'sdep',
+                  password: x,
+                  uType: 'organiser'
+                  }
+              });
+        });
+    }).then(()=>{
+        Slot.sync().then(()=>{
+            Attendee.sync();
+        })
     });
-    User.findOrCreate({
-        where: {
-            email: 'adam@mail.com'
-          }, 
-        defaults: {
-          uFname: 'adam',
-          password: x,
-          uType: 'convener'
-          }
-      });
+  });
+  
 
-     User.findOrCreate({
-          where: {
-            email: 'sdep@mail.com'
-        },
-       defaults: {
-        uFname: 'sdep',
-        password: x,
-        uType: 'organiser'
-        }
-    }).spread((user, created) => {
-        console.log(user.get({plain: true}))
-        // console.log('created: '+created)
-    });
+
+//      User.findOrCreate({
+//           where: {
+//             email: 'sdep@mail.com'
+//         },
+//        defaults: {
+//         uFname: 'sdep',
+//         password: x,
+//         uType: 'organiser'
+//         }
+//     }).spread((user, created) => {
+//         console.log(user.get({plain: true}))
+//         // console.log('created: '+created)
+//     });
 
 // sequelize
 //   .authenticate()

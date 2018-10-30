@@ -17,11 +17,11 @@ const Slot = sequelize.define('slots', {
         }
       },
     sStart: {
-        type: Sequelize.STRING,
+        type: Sequelize.TIME,
         allowNull: true
     },
     sEnd: {
-        type: Sequelize.STRING,
+        type: Sequelize.TIME,
         allowNull: true
     },
     status: {

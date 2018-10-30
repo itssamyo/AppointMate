@@ -21,9 +21,8 @@ const Meeting = sequelize.define('meetings', {
         allowNull: true
     },
     mDate: {
-        type: Sequelize.STRING,
-        allowNull: true,
-        unique: true
+        type: Sequelize.DATEONLY,
+        allowNull: true
     },
     noOfSlots: {
         type: Sequelize.STRING,

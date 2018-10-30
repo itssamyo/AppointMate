@@ -11,10 +11,10 @@ const User = require('../controllers/user');
 
 
 
-router.get('/', function(req, res, next) {
+// router.get('/', function(req, res, next) {
   
-  res.send('user type error');
-});
+//   res.send('user type error');
+// });
 
 // router.get('/get',User.list);
 

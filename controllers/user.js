@@ -31,7 +31,7 @@ module.exports = {
       var email = req.body.email,
           password = req.body.password;
             
-
+        //user switch
         User.findOne({ where: { email: email } }).then(function (user) {            
           if (!user) {
               req.session.error = 'Email not found';
