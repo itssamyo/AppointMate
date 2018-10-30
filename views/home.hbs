@@ -65,6 +65,17 @@
 					</button>
 					</div>
 
+<script>
+var app = angular.module('wrap-input100 validate-input m-t-85 m-b-35', []);
+app.controller('formCtrl', function($scope) {
+    $scope.master = {firstName: "John", lastName: "Doe"};
+    $scope.reset = function() {
+        $scope.user = angular.copy($scope.master);
+    };
+    $scope.reset();
+});
+</script>
+
 
 </form>
 </div>
