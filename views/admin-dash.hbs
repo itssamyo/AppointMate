@@ -27,7 +27,13 @@
                     <input type="text" name="lname" class="form-control" placeholder="last name" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="utype" class="form-control" placeholder="user type" required>
+                <label for="sel1">User Type:</label>
+                <select class="form-control" name="utype">
+                    <option disabled selected value> -- select an option -- </option>
+                    <option value="admin">Administrator</option>
+                    <option value="convener">Convener</option>
+                    <option value="organiser">Organiser</option>
+                </select>
                 </div>
                 
             <button type="submit" class="btn btn-primary" style="float:right">Add User</button>

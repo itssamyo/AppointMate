@@ -68,7 +68,12 @@ const UserMeeting = require('../models/usermeeting');
 
 var sessionChecker = (req, res, next) => {
     if (req.session.user && req.cookies.user_sid) {
-        res.redirect('/dashboard');
+        if(req.session.user.uType == 'convener'){
+            res.redirect('/users/conv/dash');            
+        }
+        else if(req.session.user.uType == 'organiser'){
+            res.redirect('/users/org/dash');
+        }
     } else {
         next();
     }    
@@ -84,13 +89,6 @@ router.get('/home', function(req, res, next) {
 });
 
 
-router.get('/dashboard', (req, res) => {
-  if (req.session.user && req.cookies.user_sid) {
-      res.render('dashboard');
-  } else {
-      res.redirect('/home');
-  }
-});
 
 
 

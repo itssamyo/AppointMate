@@ -10,51 +10,55 @@ const User = require('../controllers/user');
 
 
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  var item = [ {
-    username: 'sdepold',
-    job: 'Technical Lead JavaScript',
-    id: 1,   
-  },
-  true ];
 
-  res.json(item[0]);
+router.get('/', function(req, res, next) {
+  
+  res.send('user type error');
 });
 
-// router.get('/get', User.list);
-router.get('/get',User.list);
+// router.get('/get',User.list);
 
+//LOG IN - LOG OUT
+router.post('/login', User.login);
+
+router.get('/logout', (req, res) => {
+    if (req.session.user && req.cookies.user_sid) {
+        res.clearCookie('user_sid');
+        res.redirect('/');
+    } else {
+        res.redirect('/home');
+    }
+  });
+
+
+//--ADMIN
 router.get('/admin', function(req, res){
-
-  // console.log('from admin: '+req.session.result);
-
   if(req.session.user){
       if(req.session.user.uType =='admin'){          
           res.redirect('/users/admin/dash');
       }
-  }
-  else{
+  }else{
       res.status(404).send('Not found');        
-  }
-});
-
+  }});
 router.get('/admin/dash',User.list);
 router.post('/admin/addUser', User.addUser);
+//END
 
 
-router.post('/login', User.login);
-// router.post('/testlog', User.login);
+//--ORGANISER
+router.get('/org/dash', User.orgdash);
+//END
 
 
-router.get('/logout', (req, res) => {
-  if (req.session.user && req.cookies.user_sid) {
-      res.clearCookie('user_sid');
-      res.redirect('/');
-  } else {
-      res.redirect('/home');
-  }
-});
+//--CONVENER
+router.get('/conv/dash', User.convdash);
+//END
+
+
+
+
+
+
 
 
 

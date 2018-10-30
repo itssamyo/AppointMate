@@ -40,13 +40,19 @@ module.exports = {
               req.session.error = 'Incorrect password';        
               res.redirect('/home');
           }else if(user.uType == 'admin'){
-            req.session.result = 'sample result';
             req.session.user = user.dataValues;             
             res.redirect('/users/admin');
           } 
-          else {
-              req.session.user = user.dataValues;
-              res.redirect('/dashboard');
+          else if(user.uType == 'organiser'){
+            req.session.user = user.dataValues;
+            res.redirect('/users/org/dash');
+          }
+          else if(user.uType == 'convener') {
+            req.session.user = user.dataValues;
+            res.redirect('/users/conv/dash');
+          }
+          else{
+              res.send('Error! user type not found');            
           }
       });
     },
@@ -54,7 +60,7 @@ module.exports = {
     addUser(req, res){
         var email = req.body.email, password = req.body.password, fname = req.body.fname,
         lname = req.body.lname, utype = req.body.utype;
-        
+        // res.json(req.body);
         const x = bcrypt.hashSync(password);        
         User.findOrCreate({
             where: {
@@ -79,6 +85,26 @@ module.exports = {
                 res.redirect('/users/admin/dash');
             }
         });       
+    },
+
+    orgdash(req, res){
+        if(req.session.user){
+            var email = req.session.user.email;
+            res.render('org-dash',{email});
+        }
+        else{
+            res.status(404).send('Not found'); 
+        }
+    },
+
+    convdash(req, res){
+        if(req.session.user){
+            var email = req.session.user.email;
+            res.render('conv-dash', {email});
+        }
+        else{
+            res.status(404).send('Not found');
+        }
     }
  
 };
