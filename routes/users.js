@@ -4,67 +4,36 @@ var jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
 // const User = require('../models/user');
-const User = require('../controllers/user');
+const userController = require('../controllers/user');
 
+// GET request for /users redirection (incomplete)
+ router.get('/', userController.user_redirect);
 
+// GET request for Login
+router.post('/login', userController.login);
 
+// GET request for Logout
+router.get('/logout', userController.logout);
 
+// GET request for admin session check
+router.get('/admin', userController.admin_session_check);
 
+// GET request for convener session check
+router.get('/conv', userController.admin_session_check);
 
-router.get('/', function(req, res, next) {
-  
-  res.send('user type error');
-});
+// GET request for organizer session check
+router.get('/org', userController.admin_session_check);
 
-// router.get('/get',User.list);
+// GET request for User List (admin)
+router.get('/admin/dash', userController.user_list_admin);
 
-//LOG IN - LOG OUT
-router.post('/login', User.login);
+//POST request for Adding Users
+router.post('/admin/addUser', userController.add_user);
 
-router.get('/logout', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {
-        res.clearCookie('user_sid');
-        res.redirect('/');
-    } else {
-        res.redirect('/home');
-    }
-  });
+// GET request for organizer dashboard
+router.get('/org/dash', userController.org_dash);
 
-
-//--ADMIN
-router.get('/admin', function(req, res){
-  if(req.session.user){
-      if(req.session.user.uType =='admin'){          
-          res.redirect('/users/admin/dash');
-      }
-  }else{
-      res.status(404).send('Not found');        
-  }});
-router.get('/admin/dash',User.list);
-router.post('/admin/addUser', User.addUser);
-//END
-
-
-//--ORGANISER
-router.get('/org/dash', User.orgdash);
-//END
-
-
-//--CONVENER
-router.get('/conv/dash', User.convdash);
-//END
-
-
-
-
-
-
-
-
-
-
-
-
-
+// GET request for convener dashboard
+router.get('/conv/dash', userController.conv_dash);
 
 module.exports = router;

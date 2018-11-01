@@ -19,12 +19,12 @@ const UserMeeting = require('../models/usermeeting');
   Meeting.sync();
   Slot.sync();
   Attendee.sync();
-  UserMeeting.sync();  
+  UserMeeting.sync();
   const x = bcrypt.hashSync('1234');
   User.findOrCreate({
       where: {
           email: 'john@mail.com'
-        }, 
+        },
       defaults: {
         uFname: 'john',
         password: x,
@@ -34,7 +34,7 @@ const UserMeeting = require('../models/usermeeting');
     User.findOrCreate({
         where: {
             email: 'adam@mail.com'
-          }, 
+          },
         defaults: {
           uFname: 'adam',
           password: x,
@@ -69,14 +69,14 @@ const UserMeeting = require('../models/usermeeting');
 var sessionChecker = (req, res, next) => {
     if (req.session.user && req.cookies.user_sid) {
         if(req.session.user.uType == 'convener'){
-            res.redirect('/users/conv/dash');            
+            res.redirect('/users/conv/dash');
         }
         else if(req.session.user.uType == 'organiser'){
             res.redirect('/users/org/dash');
         }
     } else {
         next();
-    }    
+    }
   };
 
 router.get('/', sessionChecker, (req, res) => {
