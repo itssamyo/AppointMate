@@ -10,7 +10,7 @@ const Attendee = sequelize.define('attendees', {
     },
     sId: {
         type: Sequelize.INTEGER,
-        foreignKey: true, 
+        foreignKey: true,
         references: {
             model: Slot,
             key: 'sId'

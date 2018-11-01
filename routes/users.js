@@ -4,58 +4,36 @@ var jwt = require('jsonwebtoken');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
 // const User = require('../models/user');
-const User = require('../controllers/user');
+const userController = require('../controllers/user');
 
+// GET request for /users redirection (incomplete)
+ router.get('/', userController.user_redirect);
 
+// GET request for Login
+router.post('/login', userController.login);
 
+// GET request for Logout
+router.get('/logout', userController.logout);
 
+// GET request for admin session check
+router.get('/admin', userController.admin_session_check);
 
+// GET request for convener session check
+router.get('/conv', userController.admin_session_check);
 
-router.get('/', function(req, res, next) {
-  res.send('user type error');
-});
+// GET request for organizer session check
+router.get('/org', userController.admin_session_check);
 
+// GET request for User List (admin)
+router.get('/admin/dash', userController.user_list_admin);
 
-//LOG IN - LOG OUT
-router.post('/login', User.login_user);
-router.get('/logout', User.logout_user);
+//POST request for Adding Users
+router.post('/admin/addUser', userController.add_user);
 
+// GET request for organizer dashboard
+router.get('/org/dash', userController.org_dash);
 
-//--ADMIN
-router.get('/admin', User.admin);
-router.get('/admin/dash',User.admin_dash_list_users);
-router.post('/admin/addUser', User.admin_add_user);
-router.get('/admin/manage', User.admin_manage_users);
-// router.post('/admin/delUser', User.admin_delete_user);
-router.post('/admin/delUser', function(req, res){
-  console.log(req.body);
-  res.send(req.body);
-});
-//END
-
-
-//--ORGANISER
-router.get('/org/dash', User.org_dashboard);
-//END
-
-
-//--CONVENER
-router.get('/conv/dash', User.conv_dashboard);
-//END
-
-
-// router.get('/del', User.admin_delete_user);
-router.get('/upd', User.admin_update_user);
-
-
-
-
-
-
-
-
-
-
-
+// GET request for convener dashboard
+router.get('/conv/dash', userController.conv_dash);
 
 module.exports = router;
