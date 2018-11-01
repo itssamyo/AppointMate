@@ -11,8 +11,8 @@ const User = require('../models/user');
 const Slot = require('../models/slot');
 const Meeting = require('../models/meeting');
 const Attendee = require('../models/attendee');
-const UserMeeting = require('../models/usermeeting');
 var bcrypt = require('bcryptjs');
+const UserMeeting = require('../models/usermeeting');
 
 
   User.sync();
@@ -55,9 +55,6 @@ var bcrypt = require('bcryptjs');
         console.log(user.get({plain: true}))
         // console.log('created: '+created)
     });
-  });
-
-
 
 // sequelize
 //   .authenticate()
