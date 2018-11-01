@@ -11,50 +11,41 @@ const User = require('../controllers/user');
 
 
 
-// router.get('/', function(req, res, next) {
-  
-//   res.send('user type error');
-// });
+router.get('/', function(req, res, next) {
+  res.send('user type error');
+});
 
-// router.get('/get',User.list);
 
 //LOG IN - LOG OUT
-router.post('/login', User.login);
-
-router.get('/logout', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {
-        res.clearCookie('user_sid');
-        res.redirect('/');
-    } else {
-        res.redirect('/home');
-    }
-  });
+router.post('/login', User.login_user);
+router.get('/logout', User.logout_user);
 
 
 //--ADMIN
-router.get('/admin', function(req, res){
-  if(req.session.user){
-      if(req.session.user.uType =='admin'){          
-          res.redirect('/users/admin/dash');
-      }
-  }else{
-      res.status(404).send('Not found');        
-  }});
-router.get('/admin/dash',User.list);
-router.post('/admin/addUser', User.addUser);
+router.get('/admin', User.admin);
+router.get('/admin/dash',User.admin_dash_list_users);
+router.post('/admin/addUser', User.admin_add_user);
+router.get('/admin/manage', User.admin_manage_users);
+// router.post('/admin/delUser', User.admin_delete_user);
+router.post('/admin/delUser', function(req, res){
+  console.log(req.body);
+  res.send(req.body);
+});
 //END
 
 
 //--ORGANISER
-router.get('/org/dash', User.orgdash);
+router.get('/org/dash', User.org_dashboard);
 //END
 
 
 //--CONVENER
-router.get('/conv/dash', User.convdash);
+router.get('/conv/dash', User.conv_dashboard);
 //END
 
 
+// router.get('/del', User.admin_delete_user);
+router.get('/upd', User.admin_update_user);
 
 
 

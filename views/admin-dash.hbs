@@ -1,15 +1,14 @@
 <div class="container">
-  <h2>Admin page</h2>
-  <a href="/users/logout" style="float:right"><button class="btn btn-primary">Log Out</button></a>
+  <h3>Dashboard</h3>
+  {{!-- <a href="/users/logout" style="float:right"><button class="btn btn-primary">Log Out</button></a> --}}
   <br>
-    <div class="row">
-        {{# if exists}}
+   {{# if exists}}
         <div class="alert alert-danger alert-danger " style="width:70%">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Error! </strong> User already exists.
         </div>
-        {{/if}}
-        <h3>Add User</h3>
+    {{/if}}
+    <div class="row">               
         <form action="/users/admin/addUser" method="POST" style="width: 70%">
                  <div class="form-group">
                     <input type="email" name="email" class="form-control" placeholder="email" required>

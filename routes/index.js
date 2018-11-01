@@ -24,6 +24,7 @@ var bcrypt = require('bcryptjs');
                   }, 
                 defaults: {
                   uFname: 'john',
+                  uLname: 'nhoj',
                   password: x,
                   uType: 'admin'
                   }
@@ -34,6 +35,7 @@ var bcrypt = require('bcryptjs');
                     }, 
                   defaults: {
                     uFname: 'adam',
+                    uLname: 'mada',
                     password: x,
                     uType: 'convener'
                     }
@@ -41,10 +43,11 @@ var bcrypt = require('bcryptjs');
           
                User.findOrCreate({
                     where: {
-                      email: 'sdep@mail.com'
+                      email: 'saed@mail.com'
                   },
                  defaults: {
-                  uFname: 'sdep',
+                  uFname: 'saed',
+                  uLname: 'daes',
                   password: x,
                   uType: 'organiser'
                   }
@@ -58,20 +61,6 @@ var bcrypt = require('bcryptjs');
   });
   
 
-
-//      User.findOrCreate({
-//           where: {
-//             email: 'sdep@mail.com'
-//         },
-//        defaults: {
-//         uFname: 'sdep',
-//         password: x,
-//         uType: 'organiser'
-//         }
-//     }).spread((user, created) => {
-//         console.log(user.get({plain: true}))
-//         // console.log('created: '+created)
-//     });
 
 // sequelize
 //   .authenticate()

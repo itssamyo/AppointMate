@@ -4,7 +4,7 @@ var jwt = require('jsonwebtoken');
 var config = require('../config/index');
 
 module.exports = {
-    list(req, res) {
+    admin_dash_list_users(req, res) {
         var exists;
         if(req.session.alert){
             exists = req.session.alert;
@@ -12,7 +12,7 @@ module.exports = {
         if(req.session.user){
             if(req.session.user.uType =='admin'){
             User.findAll({
-                attributes: ['email', 'uFname','uType', 'createdAt']
+                attributes: ['email', 'uFname', 'uType', 'createdAt']
             }).then(result => {     
                 console.log(result);   
                 res.render('admin-dash', {result, exists});
@@ -27,7 +27,7 @@ module.exports = {
         }
     },
 
-    login(req, res){
+    login_user(req, res){
       var email = req.body.email,
           password = req.body.password;
             
@@ -57,7 +57,26 @@ module.exports = {
       });
     },
 
-    addUser(req, res){
+    logout_user(req, res){
+        if (req.session.user && req.cookies.user_sid) {
+            res.clearCookie('user_sid');
+            res.redirect('/');
+        } else {
+            res.redirect('/home');
+        }
+    },
+
+    admin(req, res){
+        if(req.session.user){
+            if(req.session.user.uType =='admin'){          
+                res.redirect('/users/admin/dash');
+            }
+        }else{
+            res.status(404).send('Not found');        
+        }
+    },
+
+    admin_add_user(req, res){
         var email = req.body.email, password = req.body.password, fname = req.body.fname,
         lname = req.body.lname, utype = req.body.utype;
         // res.json(req.body);
@@ -87,7 +106,37 @@ module.exports = {
         });       
     },
 
-    orgdash(req, res){
+    admin_delete_user(req, res){
+        var email = req.body.email;    
+        // console.log('sent: '+email);         
+        // User.destroy({
+        //     where: {
+        //         email: email
+        //     }
+        // }).then(result=>{
+        //     console.log(result);            
+        // })
+    },
+
+    admin_update_user(req, res){
+        User.update({
+            uLname: 'adam'
+        },{
+            where: {
+                uId: 2
+            }
+        }).then(()=>{
+            res.end();
+        });
+        // .then(result=>{
+        //     console.log(result)
+        //     res.send('updated');
+        // }).error(err=>{
+        //     console.log(err);
+        // })
+    },
+
+    org_dashboard(req, res){
         if(req.session.user){
             var email = req.session.user.email;
             res.render('org-dash',{email});
@@ -97,7 +146,7 @@ module.exports = {
         }
     },
 
-    convdash(req, res){
+    conv_dashboard(req, res){
         if(req.session.user){
             var email = req.session.user.email;
             res.render('conv-dash', {email});
@@ -105,6 +154,21 @@ module.exports = {
         else{
             res.status(404).send('Not found');
         }
+    },
+
+    admin_manage_users(req, res){      
+          
+        User.findAll({where: {uType : 'convener'},
+            attributes: ['email', 'uFname', 'uLname', 'uType', 'createdAt']
+        }).then(convener => {  
+            User.findAll({where: {uType: 'organiser'},
+            attributes: ['email', 'uFname','uLname', 'uType', 'createdAt']
+            }).then(organiser =>{
+                res.render('admin-manag', {convener, organiser});
+            });             
+            // console.log(result);   
+            
+        });
     }
  
 };
