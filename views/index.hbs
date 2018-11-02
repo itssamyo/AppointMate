@@ -1,7 +1,8 @@
 <div class="container"><br>
   <div class="row">
     <div style="width:500px; margin:0 auto">
-    <form method="POST" action="/users/login">
+      <p style="color:red">{{error}}</p>
+    <form method="POST" action="/login">
       <div id="form-group">
         <label>Email:</label>
           <input class="form-control" name="email" type="text" />

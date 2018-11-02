@@ -13,6 +13,7 @@ const Meeting = require('../models/meeting');
 const Attendee = require('../models/attendee');
 var bcrypt = require('bcryptjs');
 const UserMeeting = require('../models/usermeeting');
+const userController = require('../controllers/user');
 
 
   User.sync();
@@ -68,7 +69,10 @@ const UserMeeting = require('../models/usermeeting');
 
 var sessionChecker = (req, res, next) => {
     if (req.session.user && req.cookies.user_sid) {
-        if(req.session.user.uType == 'convener'){
+        if(req.session.user.uType == 'admin'){
+            res.redirect('/admin');
+        }
+        else if(req.session.user.uType == 'convener'){
             res.redirect('/users/conv/dash');
         }
         else if(req.session.user.uType == 'organiser'){
@@ -79,15 +83,39 @@ var sessionChecker = (req, res, next) => {
     }
   };
 
+// GET request for Login
+router.post('/login', userController.login);
+
+// GET request for Logout
+router.get('/logout', userController.logout);
+
+// Session checker
 router.get('/', sessionChecker, (req, res) => {
-    res.redirect('/home');
+    res.render('index', { error: req.session.error });
+});
+
+router.get('/*', function(req, res, next){
+    if(req.session.user){
+        next();
+    }
+    else{
+        res.status(404).send('Not found');
+    }
+});
+
+router.get('/admin*',function(req, res, next){
+    if(req.session.user.uType == 'admin'){
+        next();
+    }
+    else{
+        res.status(404).send('Not found');
+    }
 });
 
 
-router.get('/home', function(req, res, next) {
-  res.render('home',{ error: req.session.error });
-});
-
+// router.get('/home', function(req, res, next) {
+//   res.render('home',{ error: req.session.error });
+// });
 
 
 

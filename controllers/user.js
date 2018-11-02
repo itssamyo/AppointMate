@@ -5,7 +5,7 @@ var config = require('../config/index');
 
 // Redirect users from /users to /users/'user type'/dash (incomplete)
 exports.user_redirect = (req, res, next) => {
-  res.render('home')
+  res.render('index')
 };
 
 // Login and Redirect to relevant user page
@@ -15,11 +15,11 @@ exports.login = (req, res, next) => {
 
   User.findOne({ where: { email: email } }).then(function (user) {
     if (!user) {
-      req.session.error = 'Email not found';
-      res.redirect('/home');
+      req.session.error = 'Error!! email not found';
+      res.redirect('/');
     }else if(!user.validPassword(password)){
-      req.session.error = 'Incorrect password';
-      res.redirect('/home');
+      req.session.error = 'Error!! incorrect password';
+      res.redirect('/');
     }else if(user.uType == 'admin'){
       req.session.user = user.dataValues;
       res.redirect('/users/admin/dash');
@@ -44,7 +44,7 @@ exports.logout = (req, res, next) => {
       res.clearCookie('user_sid');
       res.redirect('/');
   } else {
-      res.redirect('/home');
+      res.redirect('/');
   }
 };
 
@@ -146,6 +146,45 @@ exports.add_user = (req, res, next) => {
   });
 };
 
+exports.delete_user = (req, res, next) => {
+    var email = req.body.email;
+    User.destroy({
+        where: {
+            email: email
+        }
+    }).then(result=>{
+        console.log(result);     
+        res.redirect('/users/admin/manage');       
+    })
+    
+},
+
+exports.edit_user = (req, res, next) =>
+{    
+    var email = req.params.email;
+    User.findOne({where: {email: email}}).then(function(user){
+        console.log(user);
+        res.render('edit-user', {user});
+    });
+},
+
+
+exports.update_user = (req, res, next) =>{
+    console.log(req.body.firstname);
+    User.update({        
+        uFname: req.body.firstname,
+        uLname: req.body.lastname,
+        uType: req.body.usertype
+    },{
+        where: {
+            email: req.body.email
+        }
+    }).then(result=>{
+        console.log(result);
+        res.redirect('/users/admin/manage');
+    });
+},
+
 // Render Organizer Dashboard
 exports.org_dash = (req, res, next) => {
   if(req.session.user){
@@ -167,3 +206,17 @@ exports.conv_dash = (req, res, next) => {
       res.status(404).send('Not found');
   }
 };
+
+// Admin user management
+exports.admin_manage_users = (req, res, next) => {
+     User.findAll({where: {uType : 'convener'},
+            attributes: ['email', 'uFname', 'uLname', 'uType', 'createdAt']
+        }).then(convener => {  
+            User.findAll({where: {uType: 'organiser'},
+            attributes: ['email', 'uFname','uLname', 'uType', 'createdAt']
+            }).then(organiser =>{
+                res.render('admin-manag', {convener, organiser});
+            });             
+            
+        });
+}

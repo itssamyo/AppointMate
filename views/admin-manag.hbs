@@ -19,7 +19,7 @@
                     <td>{{ res.email }}</td>
                     <td>{{ res.createdAt }}</td>
                     {{!-- <td>{{ res.uType }}</td> --}}
-                    <td><button class="btn btn-primary btn-sm">Update</button></td>
+                    <td><a href="/users/admin/editUser/{{res.email}}" class="btn btn-primary btn-sm">Update</a></td>
                     <td><button ng-click="myFunction('{{res.email}}')" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button></td>
                 </tr>            
             {{/each}}
@@ -48,7 +48,7 @@
                 <td>{{ res.createdAt }}</td>
                
                 {{!-- <td>{{ res.uType }}</td> --}}
-                <td><button class="btn btn-primary btn-sm">Update</button></td>
+                <td><a href="/users/admin/editUser/{{res.email}}" class="btn btn-primary btn-sm">Update</a></td>
                 <td><button ng-click="myFunction('{{res.email}}')" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button></td>
             </tr>
             {{/each}}         
@@ -61,18 +61,21 @@
     <div class="modal-dialog">
       <div class="modal-content">      
         <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Delete User</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>        
-        <!-- Modal body -->
-        <div class="modal-body">
-          User:[[selectEmail]]          
-        </div>        
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" ng-click="confirmDelete()" data-dismiss="modal">Delete</button>
-        </div>        
+        <form action="/users/admin/delUser" method="POST">
+            <div class="modal-header">
+            <h4 class="modal-title">Delete User</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>        
+            <!-- Modal body -->
+            <div class="modal-body">
+            <input type="text" name="email" class="form-control" value=[[selectEmail]] readonly>          
+            </div>        
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            {{!-- <button type="button" class="btn btn-danger" ng-click="confirmDelete()" data-dismiss="modal">Confirm Delete</button> --}}
+            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+            </div>  
+        </form>      
       </div>
     </div>
   </div>
@@ -90,21 +93,10 @@ var app = angular.module('myApp', []);
 app.controller('myCtrl', function($scope, $http) {
     $scope.selectEmail = ""; 
     $scope.userReload = function(convener){
-        console.log(typeof convener);
+        console.log(typeof convener);        
     }
      $scope.myFunction = function(res) {        
        $scope.selectEmail = res;
-    }
-    $scope.confirmDelete = function(){
-         $http({
-        method : "POST",
-        url : "/users/admin/delUser",
-        data: {email: $scope.selectEmail}
-    }).then(function mySuccess(response) {
-        $scope.myWelcome = response.data;
-    }, function myError(response) {
-        $scope.myWelcome = response.statusText;
-    });
     }
 
 });

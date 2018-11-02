@@ -9,12 +9,6 @@ const userController = require('../controllers/user');
 // GET request for /users redirection (incomplete)
  router.get('/', userController.user_redirect);
 
-// GET request for Login
-router.post('/login', userController.login);
-
-// GET request for Logout
-router.get('/logout', userController.logout);
-
 // GET request for admin session check
 router.get('/admin', userController.admin_session_check);
 
@@ -27,13 +21,29 @@ router.get('/org', userController.admin_session_check);
 // GET request for User List (admin)
 router.get('/admin/dash', userController.user_list_admin);
 
-//POST request for Adding Users
+// GET request to manage users
+router.get('/admin/manage', userController.admin_manage_users);
+
+// POST request for Adding Users
 router.post('/admin/addUser', userController.add_user);
+
+// POST request for deleting Users
+router.post('/admin/delUser', userController.delete_user);
+
+// GET request to edit a user
+router.get('/admin/editUser/:email', userController.edit_user);
+
+// POST request to update user 
+router.post('/admin/updateUser', userController.update_user);
 
 // GET request for organizer dashboard
 router.get('/org/dash', userController.org_dash);
 
 // GET request for convener dashboard
 router.get('/conv/dash', userController.conv_dash);
+
+
+router.get('/admin/upd', userController.update_user);
+
 
 module.exports = router;
