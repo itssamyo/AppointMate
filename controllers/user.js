@@ -1,11 +1,16 @@
 const User = require('../models/user');
 var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
-var config = require('../config/index');
+// var jwt = require('jsonwebtoken');
+// var config = require('../config/index');
 
 // Redirect users from /users to /users/'user type'/dash (incomplete)
 exports.user_redirect = (req, res, next) => {
-  res.render('index')
+     if(req.session.user.uType == 'convener'){
+        res.redirect('/users/conv/dash');
+    }
+    else if(req.session.user.uType == 'organiser'){
+        res.redirect('/users/org/dash');
+    }    
 };
 
 // Login and Redirect to relevant user page
@@ -185,27 +190,6 @@ exports.update_user = (req, res, next) =>{
     });
 },
 
-// Render Organizer Dashboard
-exports.org_dash = (req, res, next) => {
-  if(req.session.user){
-      var email = req.session.user.email;
-      res.render('org-dash',{email});
-  }
-  else{
-      res.status(404).send('Not found');
-  }
-};
-
-// Render Convener Dashboard
-exports.conv_dash = (req, res, next) => {
-  if(req.session.user){
-      var email = req.session.user.email;
-      res.render('conv-dash', {email});
-  }
-  else{
-      res.status(404).send('Not found');
-  }
-};
 
 // Admin user management
 exports.admin_manage_users = (req, res, next) => {
@@ -216,7 +200,6 @@ exports.admin_manage_users = (req, res, next) => {
             attributes: ['email', 'uFname','uLname', 'uType', 'createdAt']
             }).then(organiser =>{
                 res.render('admin-manag', {convener, organiser});
-            });             
-            
+            });                         
         });
 }

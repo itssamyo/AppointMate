@@ -1,12 +1,7 @@
 var express = require('express');
 var router = express.Router();
 require('dotenv').config();
-var assert = require('assert');
-const pg = require('pg');
-const path = require('path');
-var jwt = require('jsonwebtoken');
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
+
 const User = require('../models/user');
 const Slot = require('../models/slot');
 const Meeting = require('../models/meeting');
@@ -83,16 +78,18 @@ var sessionChecker = (req, res, next) => {
     }
   };
 
+// Session checker
+router.get('/', sessionChecker, (req, res) => {
+    res.render('index', { error: req.session.error });
+});
+
 // GET request for Login
 router.post('/login', userController.login);
 
 // GET request for Logout
 router.get('/logout', userController.logout);
 
-// Session checker
-router.get('/', sessionChecker, (req, res) => {
-    res.render('index', { error: req.session.error });
-});
+
 
 router.get('/*', function(req, res, next){
     if(req.session.user){
@@ -103,8 +100,26 @@ router.get('/*', function(req, res, next){
     }
 });
 
-router.get('/admin*',function(req, res, next){
+router.get('/users/admin*',function(req, res, next){
     if(req.session.user.uType == 'admin'){
+        next();
+    }
+    else{
+        res.status(404).send('Not found');
+    }
+});
+
+router.get('/users/conv*', function(req, res, next){
+    if(req.session.user.uType == 'convener'){
+        next();
+    }
+    else{
+        res.status(404).send('Not found');
+    }
+});
+
+router.get('/users/org*', function(req, res, next){
+    if(req.session.user.uType == 'organiser'){
         next();
     }
     else{

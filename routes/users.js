@@ -1,13 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var jwt = require('jsonwebtoken');
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
-// const User = require('../models/user');
 const userController = require('../controllers/user');
+const meetingController = require('../controllers/meeting');
+// var jwt = require('jsonwebtoken');
 
 // GET request for /users redirection (incomplete)
- router.get('/', userController.user_redirect);
+router.get('/', userController.user_redirect);
 
 // GET request for admin session check
 router.get('/admin', userController.admin_session_check);
@@ -37,11 +35,14 @@ router.get('/admin/editUser/:email', userController.edit_user);
 router.post('/admin/updateUser', userController.update_user);
 
 // GET request for organizer dashboard
-router.get('/org/dash', userController.org_dash);
+router.get('/org/dash', meetingController.org_dash);
 
 // GET request for convener dashboard
-router.get('/conv/dash', userController.conv_dash);
+router.get('/conv/dash', meetingController.conv_dash);
 
+router.get('/conv/new-meeting', meetingController.new_meeting);
+
+router.post('/conv/new-meeting', meetingController.create_meeting);
 
 router.get('/admin/upd', userController.update_user);
 
