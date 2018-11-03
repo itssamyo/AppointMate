@@ -65,7 +65,7 @@ exports.admin_session_check = (req, res, next) => {
 };
 
 // Convener Session Check
-exports.conv_check = (req, res, next) => {
+exports.conv_session_check = (req, res, next) => {
   if(req.session.user){
       if(req.session.user.uType =='convener'){
           res.redirect('/users/conv/dash');
@@ -76,21 +76,10 @@ exports.conv_check = (req, res, next) => {
 };
 
 // Organizer Session Check
-exports.org_check = (req, res, next) => {
+exports.org_session_check = (req, res, next) => {
   if(req.session.user){
       if(req.session.user.uType =='organizer'){
           res.redirect('/users/org/dash');
-      }
-  } else {
-      res.status(404).send('Not found');
-  }
-};
-
-// Admin Login Check
-exports.admin_check = (req, res, next) => {
-  if(req.session.user){
-      if(req.session.user.uType =='admin'){
-          res.redirect('/users/admin/dash');
       }
   } else {
       res.status(404).send('Not found');
@@ -158,14 +147,14 @@ exports.delete_user = (req, res, next) => {
             email: email
         }
     }).then(result=>{
-        console.log(result);     
-        res.redirect('/users/admin/manage');       
+        console.log(result);
+        res.redirect('/users/admin/manage');
     })
-    
+
 },
 
 exports.edit_user = (req, res, next) =>
-{    
+{
     var email = req.params.email;
     User.findOne({where: {email: email}}).then(function(user){
         console.log(user);
@@ -176,7 +165,7 @@ exports.edit_user = (req, res, next) =>
 
 exports.update_user = (req, res, next) =>{
     console.log(req.body.firstname);
-    User.update({        
+    User.update({
         uFname: req.body.firstname,
         uLname: req.body.lastname,
         uType: req.body.usertype
@@ -195,11 +184,16 @@ exports.update_user = (req, res, next) =>{
 exports.admin_manage_users = (req, res, next) => {
      User.findAll({where: {uType : 'convener'},
             attributes: ['email', 'uFname', 'uLname', 'uType', 'createdAt']
-        }).then(convener => {  
+        }).then(convener => {
             User.findAll({where: {uType: 'organiser'},
             attributes: ['email', 'uFname','uLname', 'uType', 'createdAt']
             }).then(organiser =>{
                 res.render('admin-manag', {convener, organiser});
+<<<<<<< HEAD
             });                         
+=======
+            });
+
+>>>>>>> origin
         });
 }

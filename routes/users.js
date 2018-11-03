@@ -11,10 +11,10 @@ router.get('/', userController.user_redirect);
 router.get('/admin', userController.admin_session_check);
 
 // GET request for convener session check
-router.get('/conv', userController.admin_session_check);
+router.get('/conv', userController.conv_session_check);
 
 // GET request for organizer session check
-router.get('/org', userController.admin_session_check);
+router.get('/org', userController.org_session_check);
 
 // GET request for User List (admin)
 router.get('/admin/dash', userController.user_list_admin);
@@ -31,7 +31,7 @@ router.post('/admin/delUser', userController.delete_user);
 // GET request to edit a user
 router.get('/admin/editUser/:email', userController.edit_user);
 
-// POST request to update user 
+// POST request to update user
 router.post('/admin/updateUser', userController.update_user);
 
 // GET request for organizer dashboard
