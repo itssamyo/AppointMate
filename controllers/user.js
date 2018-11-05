@@ -1,6 +1,18 @@
 const User = require('../models/user');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
+
+var multer = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
+var upload = multer({ storage: storage });
+
 var config = require('../config/index');
 
 // Redirect users from /users to /users/'user type'/dash (incomplete)
@@ -79,6 +91,20 @@ exports.org_session_check = (req, res, next) => {
   } else {
       res.status(404).send('Not found');
   }
+};
+
+// Admin user management
+exports.admin_manage_users = (req, res, next) => {
+     User.findAll({where: {uType : 'convener'},
+            attributes: ['email', 'uFname', 'uLname', 'uType', 'createdAt']
+        }).then(convener => {
+            User.findAll({where: {uType: 'organiser'},
+            attributes: ['email', 'uFname','uLname', 'uType', 'createdAt']
+            }).then(organiser =>{
+                res.render('admin-manag', {convener, organiser});
+            });
+
+        });
 };
 
 // List Users on the Admin Dashboard
@@ -196,16 +222,28 @@ exports.conv_dash = (req, res, next) => {
   }
 };
 
-// Admin user management
-exports.admin_manage_users = (req, res, next) => {
-     User.findAll({where: {uType : 'convener'},
-            attributes: ['email', 'uFname', 'uLname', 'uType', 'createdAt']
-        }).then(convener => {
-            User.findAll({where: {uType: 'organiser'},
-            attributes: ['email', 'uFname','uLname', 'uType', 'createdAt']
-            }).then(organiser =>{
-                res.render('admin-manag', {convener, organiser});
-            });
+// Upload CSV (organizer)
+exports.org_dash_csv = (req, res, next) => {
+  var upload = multer({ storage : storage}).single('csvFile');
+    upload(req,res,function(err) {
+        if(err) {
+            return res.end("Error uploading file.");
+            console.log('error', err);
+            next(err);
+        }
+        res.end("File is uploaded");
+    });
+};
 
-        });
-}
+// Upload CSV (convener)
+exports.conv_dash_csv = (req, res, next) => {
+  var upload = multer({ storage : storage}).single('csvFile');
+    upload(req,res,function(err) {
+        if(err) {
+            return res.end("Error uploading file.");
+            console.log('error', err);
+            next(err);
+        }
+        res.end("File is uploaded");
+    });
+};
