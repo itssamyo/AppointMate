@@ -189,11 +189,7 @@ exports.admin_manage_users = (req, res, next) => {
             attributes: ['email', 'uFname','uLname', 'uType', 'createdAt']
             }).then(organiser =>{
                 res.render('admin-manag', {convener, organiser});
-<<<<<<< HEAD
-            });                         
-=======
             });
 
->>>>>>> origin
         });
 }

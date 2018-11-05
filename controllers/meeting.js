@@ -1,8 +1,8 @@
 const User = require('../models/user');
 const Meeting = require('../models/meeting');
-// var fs = require('fs');
-// var formidable = require('formidable');
-const fileUpload = require('express-fileupload');
+var formidable = require('formidable');
+var fs = require('fs');
+var csv = require('fast-csv');
 
 
 
@@ -27,7 +27,26 @@ exports.new_meeting = (req, res, next) =>{
 
 exports.create_meeting = (req, res, next) =>{
 
-  
-  res.end();
+  var form = new formidable.IncomingForm();
+
+  form.parse(req, function (err, fields, files) {
+    var oldpath = files.filetoupload.path;
+    var newpath = './public/uploads/' + files.filetoupload.name;
+    fs.rename(oldpath, newpath, function (err) {
+      if (err) throw err;
+      res.write('File uploaded and moved!');        
+    });      
+    let csvStream = csv.fromPath(newpath, { headers: true })
+    .on('data', function(record){
+      console.log(record.email);
+    }).on('end', function(){
+      console.log('job done');
+      res.end();
+    }).on('error', function(err){
+      console.log(err);
+    }); 
+});
+
+
 }
 

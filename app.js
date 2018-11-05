@@ -11,12 +11,17 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+var fs = require('fs');
 var app = express();
+var busboy =  require('connect-busboy');
+var busboyBodyParser = require('busboy-body-parser');
 
-app.use(morgan('dev'));
 
+// app.use(morgan('dev'));
+// app.use(busboy());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+// app.use(busboyBodyParser());
 
 // view engine setup
 app.engine('hbs',hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layouts'}));
@@ -28,8 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(session({
   key: 'user_sid',
   secret: 'somerandonstuffs',
