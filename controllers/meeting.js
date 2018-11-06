@@ -26,21 +26,30 @@ exports.new_meeting = (req, res, next) =>{
 }
 
 exports.create_meeting = (req, res, next) =>{
-  Meeting.create({
-    mName: req.body.eventname,
-    mDesc: req.body.description,
-    location: req.body.location,
-    mDate: req.body.eventdate
-  
-  }).spread((user, created) => {
-    console.log(user.get({
+ var item = {
+   name : req.body.eventname,
+   loc : req.body.location,
+   desc:  req.body.description,
+   date: req.body.eventdate
+ }
+Meeting.findOrCreate({
+  where: {
+    mName: item.name
+  }, defaults: {
+    mDesc: item.desc,
+    location: item.loc,
+    mDate: item.date    
+  }
+  }).spread((meeting, created) => {
+    console.log(meeting.get({
       plain: true
     }))
     console.log(created)
-     })
-
-  res.json(req.body);
-}
+  }).then(()=>{
+    res.end();
+  })
+  
+},
 
 exports.create_attendees = (req, res, next) =>{
 
