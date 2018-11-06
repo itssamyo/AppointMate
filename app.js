@@ -3,7 +3,25 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var hbs = require('express-handlebars');
+
+var exphbs = require('express-handlebars');
+var hbs = exphbs.create({
+  extname: 'hbs',
+  defaultLayout: 'layout',
+  layoutsDir: path.join(__dirname, 'views/layouts'),
+  helpers:{
+    equal: function(lvalue, rvalue, options){
+      if (arguments.length < 3)
+        throw new Error("helper equal needs 2 parameters");
+      if( lvalue!=rvalue ) {
+        return options.inverse(this);
+      } else {
+        return options.fn(this);
+      }
+    }
+  }
+});
+
 var config = require('./config/index');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
@@ -19,8 +37,7 @@ app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // view engine setup
-app.engine('hbs',hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layouts'}));
-app.set('views', path.join(__dirname, 'views'));
+app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));

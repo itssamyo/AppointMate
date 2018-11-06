@@ -101,7 +101,7 @@ exports.admin_manage_users = (req, res, next) => {
             User.findAll({where: {uType: 'organiser'},
             attributes: ['email', 'uFname','uLname', 'uType', 'createdAt']
             }).then(organiser =>{
-                res.render('admin-manag', {convener, organiser});
+                res.render('admin-manage', {convener, organiser});
             });
 
         });
