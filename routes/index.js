@@ -1,20 +1,12 @@
 var express = require('express');
 var router = express.Router();
-require('dotenv').config();
-var assert = require('assert');
-const pg = require('pg');
-const path = require('path');
-var jwt = require('jsonwebtoken');
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
 const User = require('../models/user');
 const Slot = require('../models/slot');
 const Meeting = require('../models/meeting');
 const Attendee = require('../models/attendee');
-var bcrypt = require('bcryptjs');
 const UserMeeting = require('../models/usermeeting');
 const userController = require('../controllers/user');
-
+var bcrypt = require('bcryptjs');
 
 User.sync().then(()=>{
     Meeting.sync().then(()=>{

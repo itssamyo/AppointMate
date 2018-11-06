@@ -1,8 +1,8 @@
 const User = require('../models/user');
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
-
 var multer = require('multer');
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './public/uploads')
@@ -12,7 +12,6 @@ var storage = multer.diskStorage({
   }
 })
 var upload = multer({ storage: storage });
-
 var config = require('../config/index');
 
 // Redirect users from /users to /users/'user type'/dash (incomplete)

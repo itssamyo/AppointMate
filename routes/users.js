@@ -1,11 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var jwt = require('jsonwebtoken');
 
-const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
-// const User = require('../models/user');
+
 const userController = require('../controllers/user');
+const meetingController = require('../controllers/meeting');
 
 // GET request for /users redirection (incomplete)
  router.get('/', userController.user_redirect);
@@ -37,17 +35,17 @@ router.get('/admin/editUser/:email', userController.edit_user);
 // POST request to update user
 router.post('/admin/updateUser', userController.update_user);
 
-// GET request for organizer dashboard
-router.get('/org/dash', userController.org_dash);
+// // GET request for organizer dashboard
+router.get('/org/dash', meetingController.org_dash);
 
-// GET request for convener dashboard
-router.get('/conv/dash', userController.conv_dash);
+// // GET request for convener dashboard
+router.get('/conv/dash', meetingController.conv_dash);
 
-// POST request for organizer dashboard csv upload
-router.post('/org/dash', userController.org_dash_csv);
+// // POST request for organizer dashboard csv upload
+// router.post('/org/dash', userController.org_dash_csv);
 
-// POST request for convener dashboard csv upload
-router.post('/conv/dash', userController.conv_dash_csv);
+// // POST request for convener dashboard csv upload
+// router.post('/conv/dash', userController.conv_dash_csv);
 
 
 module.exports = router;
