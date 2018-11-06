@@ -1,5 +1,13 @@
 var express = require('express');
 var router = express.Router();
+<<<<<<< HEAD
+=======
+var jwt = require('jsonwebtoken');
+
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
+// const User = require('../models/user');
+>>>>>>> origin
 const userController = require('../controllers/user');
 const meetingController = require('../controllers/meeting');
 // var jwt = require('jsonwebtoken');
@@ -40,11 +48,17 @@ router.get('/org/dash', meetingController.org_dash);
 // GET request for convener dashboard
 router.get('/conv/dash', meetingController.conv_dash);
 
+<<<<<<< HEAD
 router.get('/conv/new-meeting', meetingController.new_meeting);
 
 router.post('/conv/new-meeting', meetingController.create_meeting);
+=======
+// POST request for organizer dashboard csv upload
+router.post('/org/dash', userController.org_dash_csv);
+>>>>>>> origin
 
-router.get('/admin/upd', userController.update_user);
+// POST request for convener dashboard csv upload
+router.post('/conv/dash', userController.conv_dash_csv);
 
 
 module.exports = router;

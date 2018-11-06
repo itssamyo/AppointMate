@@ -1,7 +1,24 @@
 const User = require('../models/user');
 var bcrypt = require('bcryptjs');
+<<<<<<< HEAD
 // var jwt = require('jsonwebtoken');
 // var config = require('../config/index');
+=======
+var jwt = require('jsonwebtoken');
+
+var multer = require('multer');
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
+var upload = multer({ storage: storage });
+
+var config = require('../config/index');
+>>>>>>> origin
 
 // Redirect users from /users to /users/'user type'/dash (incomplete)
 exports.user_redirect = (req, res, next) => {

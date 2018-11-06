@@ -52,4 +52,12 @@
             </tbody>
         </table>
     </div>
+    <form ref='uploadForm'
+      id='uploadForm'
+      action='/users/conv/dash'
+      method='post'
+      encType="multipart/form-data">
+        <input type="file" name="csvFile" />
+        <input type='submit' value='Upload!' />
+    </form>
 </div>

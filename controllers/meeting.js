@@ -26,7 +26,22 @@ exports.new_meeting = (req, res, next) =>{
 }
 
 exports.create_meeting = (req, res, next) =>{
+<<<<<<< HEAD
 
+=======
+  Meeting.create({
+    mName: req.body.eventname,
+    mDesc: req.body.description,
+    location: req.body.location,
+    mDate: req.body.eventdate
+  
+  }).spread((user, created) => {
+    console.log(user.get({
+      plain: true
+    }))
+    console.log(created)
+     })
+>>>>>>> origin
 
   res.json(req.body);
 }
