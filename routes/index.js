@@ -58,7 +58,7 @@ User.sync().then(()=>{
 var sessionChecker = (req, res, next) => {
     if (req.session.user && req.cookies.user_sid) {
         if(req.session.user.uType == 'admin'){
-            res.redirect('/admin');
+            res.redirect('/users/admin');
         }
         else if(req.session.user.uType == 'convener'){
             res.redirect('/users/conv/dash');
@@ -82,6 +82,10 @@ router.get('/', sessionChecker, (req, res) => {
     res.render('index', { error: req.session.error });
 });
 
+router.get('/users', sessionChecker, (req, res) => {
+    res.render('index');
+})
+
 router.get('/*', function(req, res, next){
     if(req.session.user){
         next();
@@ -91,8 +95,27 @@ router.get('/*', function(req, res, next){
     }
 });
 
-router.get('/admin*',function(req, res, next){
+
+router.get('/users/admin*',function(req, res, next){
     if(req.session.user.uType == 'admin'){
+        next();
+    }
+    else{
+        res.status(404).send('Not found');
+    }
+});
+
+router.get('/users/conv*', function(req, res, next){
+    if(req.session.user.uType == 'convener'){
+        next();
+    }
+    else{
+        res.status(404).send('Not found');
+    }
+});
+
+router.get('/users/org*', function(req, res, next){
+    if(req.session.user.uType == 'organiser'){
         next();
     }
     else{
