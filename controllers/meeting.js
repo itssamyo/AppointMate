@@ -27,8 +27,13 @@ exports.new_meeting = (req, res, next) =>{
 
 exports.create_meeting = (req, res, next) =>{
 
-  var form = new formidable.IncomingForm();
 
+  res.json(req.body);
+}
+
+exports.create_attendees = (req, res, next) =>{
+
+  var form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
     var oldpath = files.filetoupload.path;
     var newpath = './public/uploads/' + files.filetoupload.name;
