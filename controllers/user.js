@@ -219,4 +219,30 @@ exports.admin_manage_users = (req, res, next) => {
             });
 
         });
-}
+};
+
+// Upload CSV (organizer)
+exports.org_dash_csv = (req, res, next) => {
+    var upload = multer({ storage : storage}).single('csvFile');
+      upload(req,res,function(err) {
+          if(err) {
+              return res.end("Error uploading file.");
+              console.log('error', err);
+              next(err);
+          }
+          res.end("File is uploaded");
+      });
+  };
+  
+  // Upload CSV (convener)
+  exports.conv_dash_csv = (req, res, next) => {
+    var upload = multer({ storage : storage}).single('csvFile');
+      upload(req,res,function(err) {
+          if(err) {
+              return res.end("Error uploading file.");
+              console.log('error', err);
+              next(err);
+          }
+          res.end("File is uploaded");
+      });
+  };
