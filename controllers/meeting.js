@@ -26,9 +26,6 @@ exports.new_meeting = (req, res, next) =>{
 }
 
 exports.create_meeting = (req, res, next) =>{
-<<<<<<< HEAD
-
-=======
   Meeting.create({
     mName: req.body.eventname,
     mDesc: req.body.description,
@@ -41,7 +38,6 @@ exports.create_meeting = (req, res, next) =>{
     }))
     console.log(created)
      })
->>>>>>> origin
 
   res.json(req.body);
 }
