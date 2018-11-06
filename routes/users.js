@@ -35,14 +35,16 @@ router.get('/admin/editUser/:email', userController.edit_user);
 // POST request to update user
 router.post('/admin/updateUser', userController.update_user);
 
-// // GET request for organizer dashboard
+// GET request for organizer dashboard
 router.get('/org/dash', meetingController.org_dash);
 
-// // GET request for convener dashboard
+// GET request for convener dashboard
 router.get('/conv/dash', meetingController.conv_dash);
 
+//GET request for convener create new meeting page
 router.get('/conv/new-meeting', meetingController.new_meeting);
 
+//POST request for convener crate new meeting page
 router.post('/conv/new-meeting', meetingController.create_meeting);
 
 // POST request for organizer dashboard csv upload
