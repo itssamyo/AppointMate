@@ -1,8 +1,10 @@
 const User = require('../models/user');
 const Meeting = require('../models/meeting');
+const Slot =  require('../models/slot');
 var formidable = require('formidable');
 var fs = require('fs');
 var csv = require('fast-csv');
+const Sequelize = require('sequelize');
 
 
 
@@ -30,12 +32,25 @@ exports.create_meeting = (req, res, next) =>{
    name : req.body.eventname,
    loc : req.body.location,
    desc:  req.body.description,
-   date: req.body.eventdate
+   date: req.body.eventdate,
+   s1start: req.body.s1start,
+   s1end: req.body.s1end,
+   s2start: req.body.s2start,
+   s2end: req.body.s2end,   
+   s3start: req.body.s3start,
+   s3end: req.body.s3end,
+   s4start: req.body.s4start,
+   s4end: req.body.s4end,
+   s5start: req.body.s5end,
+   s5end: req.body.s5end
  }
+ console.log(req.body);
+var meetID;
 Meeting.findOrCreate({
   where: {
     mName: item.name
   }, defaults: {
+    mName: item.name,
     mDesc: item.desc,
     location: item.loc,
     mDate: item.date    
@@ -45,9 +60,74 @@ Meeting.findOrCreate({
       plain: true
     }))
     console.log(created)
-  }).then(()=>{
-    res.end();
-  })
+    meetID = meeting.mId;
+  }).then(()=>{  
+    console.log('first slot entry');   
+    Slot.findOrCreate({
+      where: {
+        sStart: item.s1start,
+        sEnd: item.s1end,
+        mId: meetID
+      }, defaults: {
+        status: 'pending', 
+      }
+    })
+
+    if(item.s2start != ""){
+      console.log('second slot entry');
+      Slot.findOrCreate({
+        where: {
+          sStart: item.s2start,
+          sEnd: item.s2end,
+          mId: meetID
+        }, defaults: {
+          status: 'pending'
+        }
+      })
+    }
+
+    if(item.s3start != ""){
+      console.log('third slot entry');
+      Slot.findOrCreate({
+        where: {
+          sStart: item.s3start,
+          sEnd: item.s3end,
+          mId: meetID
+        }, defaults: {
+          status: 'pending'
+        }
+      })
+    }
+
+    if(item.s4start != ""){
+      console.log('fourth slot entry');
+      Slot.findOrCreate({
+        where: {
+          sStart: item.s4start,
+          sEnd: item.s4end,
+          mId: meetID
+        }, defaults: {
+          status: 'pending'
+        }
+      })
+    }
+
+    if(item.s5start != ""){
+      console.log('fifth slot entry');
+      Slot.findOrCreate({
+        where: {
+          sStart: item.s5start,
+          sEnd: item.s5end,
+          mId: meetID
+        }, defaults: {
+          status: 'pending'
+        }
+      })
+    }
+
+    }).then(()=>{      
+    res.render('conv-conf-meet', { meetID });
+    })
   
 },
 

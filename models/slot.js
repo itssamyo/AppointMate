@@ -27,12 +27,6 @@ const Slot = sequelize.define('slots', {
     status: {
         type: Sequelize.STRING,
         allowNull: true
-    },
-    timestamp: Sequelize.DATE
+    }
 });
-
-// sequelize.sync()
-//     .then(() => console.log('[[Slot table has been successfully created, if one doesn\'t exist]]'))
-//     .catch(error => console.log('Slot table  error occured', error));
-
     module.exports = Slot;

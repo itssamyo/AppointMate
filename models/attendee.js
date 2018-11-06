@@ -34,8 +34,4 @@ const Attendee = sequelize.define('attendees', {
     }
 });
 
-// sequelize.sync()
-//     .then(() => console.log('[[Attendee table has been successfully created, if one doesn\'t exist]]'))
-//     .catch(error => console.log('This error occured', error));
-
     module.exports = Attendee;

@@ -23,15 +23,7 @@ const Meeting = sequelize.define('meetings', {
     mDate: {
         type: Sequelize.DATEONLY,
         allowNull: true
-    },
-    noOfSlots: {
-        type: Sequelize.STRING,
-        allowNull: true
     }
 });
-
-// sequelize.sync()
-//     .then(() => console.log('[[Meeting table has been successfully created, if one doesn\'t exist]]'))
-//     .catch(error => console.log('This error occured', error));
 
 module.exports = Meeting;
