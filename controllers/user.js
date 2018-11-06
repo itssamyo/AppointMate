@@ -92,6 +92,23 @@ exports.org_session_check = (req, res, next) => {
   }
 };
 
+<<<<<<< HEAD
+=======
+// Admin user management
+exports.admin_manage_users = (req, res, next) => {
+     User.findAll({where: {uType : 'convener'},
+            attributes: ['email', 'uFname', 'uLname', 'uType', 'createdAt']
+        }).then(convener => {
+            User.findAll({where: {uType: 'organiser'},
+            attributes: ['email', 'uFname','uLname', 'uType', 'createdAt']
+            }).then(organiser =>{
+                res.render('admin-manage', {convener, organiser});
+            });
+
+        });
+};
+
+>>>>>>> 9253bbe5f0d6d72ce15b5cd242bf715098377bfc
 // List Users on the Admin Dashboard
 exports.user_list_admin = (req, res, next) => {
   var exists;
