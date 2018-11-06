@@ -101,10 +101,6 @@ router.get('/admin*',function(req, res, next){
 });
 
 
-// router.get('/home', function(req, res, next) {
-//   res.render('home',{ error: req.session.error });
-// });
-
 
 
 

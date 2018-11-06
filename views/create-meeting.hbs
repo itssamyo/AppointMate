@@ -1,0 +1,48 @@
+<div class="container">
+    <h4>Create meeting</h4>
+    {{!-- <div class="row">
+           <form action="/users/conv/new-meeting" method="post" enctype="multipart/form-data">
+            <input type="file" name="filetoupload"><br>
+            <input type="submit">
+           </form>
+    </div> --}}
+
+    <form action="/users/conv/new-meeting" method="post">
+        <div class="form-group">            
+            <input type="text" class="form-control" name="eventname" placeholder="Event name" required>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="location" placeholder="Location" required>
+        </div>
+        <div class="form-group">
+            <textarea rows="3" cols="50" name="description" type="text-area" class="form-control" name="desc" placeholder="Description" required></textarea>
+        </div>
+        <div class="form-group" style="width:300px">
+            <input type="date" name="eventdate" class="form-control" required>
+        </div>   
+        <div class="form-group">
+            <input type="time" name="s1start"/>&nbsp
+            <input type="time" name="s1end"/>
+            <a href="#" class="btn btn-success btn-sm" id="ad2">add</a><br>
+        </div>
+        <div class="form-group">
+            <input type="time" class="t2" name="s2start"/>&nbsp
+            <input type="time" class="t2" name="s2end"/><br>
+        </div>       
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script>
+$(document).ready(function(){
+    $(".t2").hide();
+
+    $("#ad2").click(function(){
+        $(".t2").show();
+        $("#ad2").hide();
+    });
+});
+
+</script>
+
+

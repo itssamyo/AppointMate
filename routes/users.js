@@ -41,6 +41,10 @@ router.get('/org/dash', meetingController.org_dash);
 // // GET request for convener dashboard
 router.get('/conv/dash', meetingController.conv_dash);
 
+router.get('/conv/new-meeting', meetingController.new_meeting);
+
+router.post('/conv/new-meeting', meetingController.create_meeting);
+
 // POST request for organizer dashboard csv upload
 router.post('/org/dash', userController.org_dash_csv);
 
