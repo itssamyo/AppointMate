@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var jwt = require('jsonwebtoken');
+
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
 // const User = require('../models/user');
@@ -42,8 +43,11 @@ router.get('/org/dash', userController.org_dash);
 // GET request for convener dashboard
 router.get('/conv/dash', userController.conv_dash);
 
+// POST request for organizer dashboard csv upload
+router.post('/org/dash', userController.org_dash_csv);
 
-router.get('/admin/upd', userController.update_user);
+// POST request for convener dashboard csv upload
+router.post('/conv/dash', userController.conv_dash_csv);
 
 
 module.exports = router;
