@@ -29,6 +29,7 @@ exports.conv_dash = (req, res, next) => {
            var meeting = {}
            var len = usermeet.length;           
            var num=0;
+           var meeting = "";
            console.log('usermeet length: '+len);
             if(usermeet.length>0){
             for(var i=0;i<usermeet.length;i++){
@@ -50,7 +51,7 @@ exports.conv_dash = (req, res, next) => {
             }   
           }
           else{
-            res.render('conv-dash', {organiser, meet});
+            res.render('conv-dash', {organiser, meeting});
           }          
           })          
     
@@ -514,7 +515,7 @@ exports.conv_slot_status = (req, res, next) => {
         mId: meetId
       }
     }).then(attendees=>{
-      // res.json(attendees);
+      res.json(attendees);
       res.render('conv-slot-status', { slots, attendees });
     })
     
