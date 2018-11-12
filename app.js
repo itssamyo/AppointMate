@@ -3,8 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
 var exphbs = require('express-handlebars');
+
 var hbs = exphbs.create({
   extname: 'hbs',
   defaultLayout: 'layout',

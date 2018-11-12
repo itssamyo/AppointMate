@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <br><br>
+            <h5>SLOT INFORMATION</h5>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{# each slots as |res|}}
+                
+                <tr>
+                    <td>{{ res.sStart }}</td>
+                    <td>{{ res.sEnd }}</td>
+                    {{# equal res.status "booked"}}
+                    <td style="color:green">{{ res.status }}</td>
+                    {{else}}
+                    <td style="color: orange">{{ res.status }}</td>
+                    {{/ equal}}
+                </tr>
+           
+                {{/ each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col">
+            <h5>ATTENDEES</h5>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>FirstName</th>
+                        <th>LastName</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{# each attendees as |res|}}
+                    <tr>
+                        <td>{{ res.aFname }}</td>
+                        <td>{{ res.aLname }}</td>
+                        <td>{{ res.aEmail }}</td>
+                    </tr>
+                    {{/ each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

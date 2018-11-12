@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h4>Welcome attendee</h4>
+            <p>Please select your preffered slot for the meeting:</p>
+            <p>(Booked slots cannot be selected)</p>
+            <form action="/attendee/confirm-slot/{{ aid }}" method="POST">
+                 {{# each slots as |res| }}
+                <div class="radio">           
+                    <label style="border: 1px solid grey; border-radius:5px; padding: 5px;" for="start">{{ res.sStart }}</label>&nbsp;
+                    <span>-</span>&nbsp;
+                    <label style="border: 1px solid grey; border-radius:5px; padding: 5px;" for="end">{{ res.sEnd }}</label>&nbsp;&nbsp;&nbsp;
+                    {{# equal res.status "booked"}}
+                        <input type="radio" name="slot" value="{{res.sId}}" disabled>  
+                        {{else}}
+                        <input type="radio" name="slot" value="{{res.sId}}">    
+                        {{/equal}}   
+                         </div>
+                    {{/each}}                       
+                 <br><br>
+                 <button type="submit" class="btn btn-success" style="float:right">Submit Selection</button>
+            </form>
+        </div>
+    </div>
+</div>

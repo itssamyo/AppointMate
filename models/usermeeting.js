@@ -10,6 +10,7 @@ const UserMeeting = sequelize.define('usermeeting', {
         primaryKey: true,
         foreignKey: true,
         unique: false,
+        deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
         references: {
             model: User,
             key: 'uId'
@@ -21,6 +22,7 @@ const UserMeeting = sequelize.define('usermeeting', {
         primaryKey: true,
         foreignKey: true,
         unique: false,
+        deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE,
         references: {
             model: Meeting,
             key: 'mId'

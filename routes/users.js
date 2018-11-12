@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
-
-
 const userController = require('../controllers/user');
 const meetingController = require('../controllers/meeting');
+var jwt = require('jsonwebtoken');
 
 // GET request for /users redirection (incomplete)
  router.get('/', userController.user_redirect);
@@ -48,10 +47,26 @@ router.get('/conv/new-meeting', meetingController.new_meeting);
 router.post('/conv/new-meeting', meetingController.create_meeting);
 
 // POST request for organizer dashboard csv upload
-router.post('/org/dash', userController.org_dash_csv);
+// router.post('/org/dash', userController.org_dash_csv);
 
-// POST request for convener dashboard csv upload
-router.post('/conv/dash', userController.conv_dash_csv);
+// // POST request for convener dashboard csv upload
+// router.post('/conv/dash', userController.conv_dash_csv);
+
+router.get('/conv/upload-attend', meetingController.upload_attendees);
+
+router.post('/conv/uploadattend/:meetID', meetingController.create_attendees);
+
+router.get('/conv/manage-meet', meetingController.conv_manage_meeting);
+
+router.get('/conv/confirm-meet', meetingController.conv_confirm_meeting);
+
+router.get('/conv/slot-status/:meetid', meetingController.conv_slot_status);
+
+
+
+
+
+
 
 
 module.exports = router;
