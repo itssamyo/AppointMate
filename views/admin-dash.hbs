@@ -1,44 +1,45 @@
-<div class="container">
-  <h3>Dashboard</h3>
-  {{!-- <a href="/users/logout" style="float:right"><button class="btn btn-primary">Log Out</button></a> --}}
-  <br>
+<div class="container"><br>
+  <h4>DASHBOARD</h4><br>
+  <h6>NEW USER</h6>
    {{# if exists}}
-        <div class="alert alert-danger alert-danger " style="width:70%">
+        <div class="alert alert-danger alert-danger">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Error! </strong> User already exists.
         </div>
     {{/if}}
-    <div class="row">               
-        <form action="/users/admin/addUser" method="POST" style="width: 70%">
-                 <div class="form-group">
-                    <input type="email" name="email" class="form-control" placeholder="email" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="password" class="form-control" placeholder="password" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="fname" class="form-control" placeholder="first name" required>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="lname" class="form-control" placeholder="last name" required>
-                </div>
-                <div class="form-group">
-                <label for="sel1">User Type:</label>
-                <select class="form-control" name="utype">
-                    <option disabled selected value> -- select an option -- </option>
-                    <option value="admin">Administrator</option>
-                    <option value="convener">Convener</option>
-                    <option value="organiser">Organiser</option>
-                </select>
-                </div>
+    <div class="row" style="height: auto; box-shadow: 0px 0px 15px -2px;border-radius:7px; padding:30px;">  
+        <div class="col">         
+            <form action="/users/admin/addUser" method="POST">
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" placeholder="email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="password" class="form-control" placeholder="password" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="fname" class="form-control" placeholder="first name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="lname" class="form-control" placeholder="last name" required>
+                    </div>
+                    <div class="form-group">
+                    <label for="sel1">User Type:</label>
+                    <select class="form-control" name="utype">
+                        <option disabled selected value> -- select an option -- </option>
+                        <option value="admin">Administrator</option>
+                        <option value="convener">Convener</option>
+                        <option value="organiser">Organiser</option>
+                    </select>
+                    </div>
 
-            <button type="submit" class="btn btn-primary" style="float:right">Add User</button>
-        </form>
+                <button type="submit" class="btn btn-primary" style="float:right">Add User</button>
+            </form>
+        </div> 
     </div>
     <br>
-    <div class="row">
-        <h3>Accounts</h3>
-        <table class="table">
+    <br>&nbsp;&nbsp;<h6>USER ACCOUNTS</h6>
+    <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:7px;">        
+        <table class="table table-hover">
             <thead>
             <tr>
                 <th>Firstname</th>

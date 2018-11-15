@@ -1,0 +1,52 @@
+<div class="container">
+    <h3>conv manage meeting</h3>
+    <br><h4>Attendees</h4>
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{# each attendee as |res| }}
+                    <tr>
+                        <td>{{ res.aFname }}</td>    
+                        <td>{{ res.aLname }}</td>                
+                        <td>{{ res.aEmail }}</td>
+                    </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div><br>
+    <h4>Slots</h4>
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Start Time</th>
+                    <th>End time</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{# each slot as |res| }}
+                    <tr>
+                        <td>{{ res.sStart }}</td>    
+                        <td>{{ res.sEnd }}</td>                
+                    </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div style="float:right">
+            <a href="/users/org/confirm-meet" style="color:white" class="btn btn-primary">Confirm Meeting</a>
+            </div>
+        </div>
+    </div>
+</div>

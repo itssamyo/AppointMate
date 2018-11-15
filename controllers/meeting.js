@@ -19,7 +19,7 @@ exports.conv_dash = (req, res, next) => {
 
     var userid = req.session.user.uId;
     User.findAll({where: {uType: 'organiser'},
-    attributes: ['email', 'uFname','uLname', 'uType', 'createdAt']
+    attributes: ['uId', 'email', 'uFname','uLname', 'uType', 'createdAt']
     }).then(organiser =>{
         UserMeet.findAll({
           where: {
@@ -50,6 +50,7 @@ exports.conv_dash = (req, res, next) => {
             }   
           }
           else{
+            meeting = "";
             res.render('conv-dash', {organiser, meeting});
           }          
           })          
@@ -60,15 +61,51 @@ exports.conv_dash = (req, res, next) => {
   // Render Organizer Dashboard
 exports.org_dash = (req, res, next) => {
     var email = req.session.user.email;
-    res.render('org-dash',{email});
+    var userid = req.session.user.uId;
+    UserMeet.findAll({
+      where: {
+        uId: userid
+      }, attributes: ['mId']
+    }).then(usermeet=>{
+       var meeting = {}
+       var len = usermeet.length;           
+       var num=0;
+       console.log('usermeet length: '+len);
+        if(usermeet.length>0){
+        for(var i=0;i<usermeet.length;i++){
+          console.log(usermeet[i].mId);
+          meetingid = usermeet[i].mId;
+          
+          Meeting.findAll({
+            where:{
+              mId: meetingid
+            }
+          }).then(meetings=>{                
+            meeting[num] = meetings;
+            num++;
+            if(num == len){
+              // res.json(sample);
+              res.render('org-dash', { meeting }); 
+            }
+          })             
+        }   
+      }
+      else{
+        meeting = "";
+        res.render('org-dash', { meeting });
+      }          
+      })  
+
+    // res.render('org-dash',{email});
   };
 
-exports.new_meeting = (req, res, next) =>{
-    res.render('create-meeting');    
+exports.conv_new_meeting = (req, res, next) =>{
+    res.render('conv-create-meeting');    
 }
 
-exports.create_meeting = (req, res, next) =>{
+exports.conv_create_meeting = (req, res, next) =>{
 var userID = req.session.user.uId;
+req.session.testid = 5;
  var item = {
    name : req.body.eventname,
    loc : req.body.location,
@@ -85,16 +122,16 @@ var userID = req.session.user.uId;
    s5start: req.body.s5end,
    s5end: req.body.s5end
  }
- console.log(req.body);
+//  console.log(req.body);
 var meetID;
 Meeting.findOrCreate({
   where: {
-    mName: item.name
-  }, defaults: {
     mName: item.name,
-    mDesc: item.desc,
     location: item.loc,
     mDate: item.date    
+  }, defaults: {
+    mName: item.name,
+    mDesc: item.desc
   }
   }).spread((meeting, created) => {
     console.log(meeting.get({
@@ -184,13 +221,12 @@ Meeting.findOrCreate({
     })
 },
 
-exports.upload_attendees = (req, res, next) => {  
+exports.conv_upload_attendees = (req, res, next) => {  
   var meetID = req.session.meetID;
-  // console.log('meeting id: '+meetID);
   res.render('conv-upload-attend', { meetID });
 },
 
-exports.create_attendees = (req, res, next) =>{
+exports.conv_create_attendees = (req, res, next) =>{
   console.log('meeting id: '+ req.params.meetID);
   var meetID = req.params.meetID;
   var form = new formidable.IncomingForm();
@@ -198,54 +234,71 @@ exports.create_attendees = (req, res, next) =>{
     var oldpath = files.filetoupload.path;
     var newpath = './public/uploads/' + files.filetoupload.name+'-'+Date.now();
     fs.rename(oldpath, newpath, function (err) {
-      if (err) throw err;
-      // res.write('File uploaded and moved!');            
-    })
-    var count = 0;
+      if (err){
+        throw error
+      }
+      else{
+        var rowNum = 0;
     let csvStream = csv.fromPath(newpath, { headers: true })
     .on('data', function(record){  
+      
+      rowNum+=1;
 
-      csvStream.pause();
-      Attendee.findOrCreate({
-        where: {
-          aEmail: record.email,
-          mId: meetID
-        }, defaults: {
-          aFname: record.firstname,
-          aLname: record.lastname
-        }
-      }).spread((attendee, created) => {
-        console.log(attendee.get({
-          plain: true
-        }))
-        console.log('created:'+ created)
-        count++;
-        if(count == 4){
-          req.session.meetID = meetID;
-          res.redirect('/users/conv/manage-meet');
-        }
-      })
-      csvStream.resume();
     }).on('end', function(){
       console.log('job done'); 
+      console.log('--ROW NUM: '+rowNum);
 
-      try {
-        fs.unlinkSync(newpath);
-        console.log('--successfully deleted csv file');
-      } catch (err) {
-        console.log('Error removing csv file');
-      }
-      // res.send('working till here');
-      // req.session.meetID = meetID;
-      // res.redirect('/users/conv/manage-meet');
+      var count = 0;
+      let csvStream = csv.fromPath(newpath, { headers: true })
+       .on('data', function(record){  
+      
+            csvStream.pause();
+            Attendee.findOrCreate({
+              where: {
+                aEmail: record.email,
+                mId: meetID
+              }, defaults: {
+                aFname: record.firstname,
+                aLname: record.lastname
+              }
+            }).spread((attendee, created) => {
+              console.log(attendee.get({
+                plain: true
+              }))
+              console.log('created:'+ created)
+              count+=1;
+              
+            }).then(()=>{
+              if(count == rowNum){
+                // try {
+                //   fs.unlinkSync(newpath);
+                //   console.log('--successfully deleted csv file');
+                // } catch (err) {
+                //   console.log('Error removing csv file');
+                // }
+                req.session.meetID = meetID;
+                res.redirect('/users/conv/manage-meet');
+              }
+            })
+            csvStream.resume();
+
+      }).on('error', function(err){
+        console.log(err);
+      });
+
+
     }).on('error', function(err){
       console.log(err);
-    }); 
+    });
+      }
+      // res.write('File uploaded and moved!');            
+    })
+     
 })
 },
 
 exports.conv_manage_meeting = (req, res, next) => {
-  console.log('meeting id lat: '+req.session.meetID);
+  console.log('testid--input: '+req.session.testid);
   
   console.log('attendees accessible?');
   Attendee.findAll({
@@ -269,6 +322,8 @@ exports.conv_confirm_meeting = (req, res, next) =>{
 
   var transporter = nodemailer.createTransport({
     service: 'gmail',
+    pool: true,
+    direct: true,    
     auth: {
       user: config.email,
       pass: config.password
@@ -288,30 +343,34 @@ exports.conv_confirm_meeting = (req, res, next) =>{
         mId: meetid
       }, attributes: ['aId', 'aEmail']
     }).then(attendee=>{
+      // res.json(attendee);
+
       for(var i=0;i<attendee.length;i++){
-        var attenId = attendee[i].aId;
-        console.log('attendeeeeeID: '+attenId)
+        var attendEmail = attendee[i].aEmail;
+        var attendId = attendee[i].aId;
+        // console.log('attendeeeeeID: '+attendId)
+
         var token = jwt.sign({
           exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),          
           mId: meetid,
-          aId: attenId,
+          aId: attendId,
         }, config.secret);
 
         var mailOptions = {
           from: 'youremail@gmail.com',
-          to: attendee[i].aEmail,
+          to: attendEmail,
           subject: 'Meeting Request',
-          html: 'MEETING INFORMATION <br><br> Name: '
-          + meeting.mName + '<br> Description: ' + meeting.mDesc + '<br> Location: ' + meeting.location
-          + ' <br> Please open the following link to select your time slot: <br>' 
+          html: '<b>MEETING INFORMATION</b> <br><br> NAME: &nbsp;'
+          + meeting.mName + '<br> DESCRIPTION: &nbsp;' + meeting.mDesc + '<br> LOCATION: &nbsp;' + meeting.location
+          + '<br>DATE: &nbsp;'+ meeting.mDate + ' <br> Please open the following link to select your time slot: <br>' 
           + 'http://localhost:3000/attendee/'+token
         };
 
         transporter.sendMail(mailOptions, function(error, info){
           if (error) {
-            console.log('email-send-error-to: '+attendee[i].aEmail+' : '+error);          
+            console.log('email-send-error-to: '+attendEmail+' : '+error);          
           } else {
-            console.log('Email sent-to: '+attendee[i].aEmail+' : '+ info.response);            
+            console.log('Email sent-to: '+attendEmail+' : '+ info.response);            
           }
         })
         if(i == attendee.length-1){
@@ -324,13 +383,15 @@ exports.conv_confirm_meeting = (req, res, next) =>{
 
 exports.attendee_slot_selec = (req, res, next) =>{
   var token  = req.params.token;
-  // console.log('token: '+token)
   var decoded = jwt.verify(token, config.secret);
-  // console.log('decoded: '+decoded);
+  var convEmail = decoded.convEmail;
   var aid = decoded.aId;
   var mid = decoded.mId;
-  console.log('aid: '+aid+'|| mid: '+mid);
-   
+ 
+  if(convEmail == null){
+    convEmail = "user";
+  }  
+  
   Slot.findOne({
     where: {
       aId: aid
@@ -338,7 +399,7 @@ exports.attendee_slot_selec = (req, res, next) =>{
   }).then(fslot=>{
 
     if(fslot != null){
-      res.send('Sorry, you have already confirmed your slot')
+      res.send('Sorry, you have already confirmed your slot');
     }
     else{
       Slot.findAll({
@@ -347,7 +408,7 @@ exports.attendee_slot_selec = (req, res, next) =>{
         }
       }).then(slots=>{
         // res.json(slots);
-        res.render('attend_slot_selec', { slots, aid }) 
+        res.render('attend_slot_selec', { slots, aid, convEmail }) 
       })
     }
   })
@@ -356,7 +417,7 @@ exports.attendee_slot_selec = (req, res, next) =>{
 exports.attendee_confirm_slot = (req, res, next) => {
   var aid = req.params.aid;
   var sid = req.body.slot;
-  // res.json(sid);
+  var conv = req.params.conv;
   Slot.update({
     aId: aid,
     status: 'booked'
@@ -406,8 +467,6 @@ exports.attendee_confirm_slot = (req, res, next) => {
                     sminute+=rstime[i];
                   }
                 }
-              
-                // res.send(sminute);
 
                 //getting slot end time
                 var etime = slots.sEnd;
@@ -465,9 +524,15 @@ exports.attendee_confirm_slot = (req, res, next) => {
                       }
                     }); 
 
+                    if(conv == "user"){
+                      mailRecv = attendee.aEmail+','+user.email;
+                    }
+                    else{
+                      mailRecv = attendee.aEmail+','+user.email+','+conv;
+                    }
                     var mailOptions = {
-                      from: 'appointmate@gmail.com',
-                      to: attendee.aEmail+','+ user.email,
+                      from: 'appointmate@gmail.com',                      
+                      to: mailRecv,
                       subject: meeting.mName+' outlook clendar',
                       text: 'Please download the attached file to add to Outlook',
                       attachments: [{
@@ -521,6 +586,412 @@ exports.conv_slot_status = (req, res, next) => {
   })
 
 }
+
+exports.conv_auth_org = (req, res, next) => {
+  var orgid = req.params.orgId;
+  var convid = req.session.user.uId;
+  res.render('conv-auth-org', { orgid, convid });
+}
+
+exports.conv_post_auth_org = (req, res, next) => {
+
+    convid = req.params.convId;
+    orgid = req.params.orgId;
+    console.log('orgid: '+orgid);
+    var form = new formidable.IncomingForm();
+
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      direct: true,
+      pool: true,
+      auth: {
+        user: config.email,
+        pass: config.password
+      }
+    }); 
+
+    form.parse(req, function (err, fields, files) {
+      var inp = {
+        eventname: fields.eventname,
+        location: fields.location,
+        descrip: fields.description,
+        date: fields.eventdate
+      }
+      var oldpath = files.filetoupload.path;
+      var newpath = './public/uploads/Attendees'+Date.now()+'.csv';
+
+      fs.rename(oldpath, newpath, function (err) {
+        if (err) throw err;        
+      });
+
+      User.findOne({
+        where: {
+          uId: convid
+        }
+      }).then(convener=>{
+        
+        User.findOne({
+          where: {
+            uId: orgid
+          }
+        }).then(organiser=>{
+          
+          var mailOptions = {
+            from: 'youremail@gmail.com',
+            to: organiser.email,
+            subject: 'Appointmate Meeting Authorization',
+            html: '<span style="color: black">You have been authorized by the Convener: &nbsp;' + convener.email +'<br><br><b>MEETING INFORMATION</b>: '
+            + '<br><b>NAME</b>: &nbsp; &nbsp;' + inp.eventname + '<br><b>LOCATION</b>: &nbsp; &nbsp;' + inp.location + '<br><b>DESCRIPTION</b>: &nbsp; &nbsp;' 
+            + inp.description + '<br><b>DATE</b>: &nbsp; &nbsp;' + inp.date + '<br>Please use the attached Attendee list to create the meeting. </span>',
+            attachments: [{
+              path: newpath
+            }]
+          };
+
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log('email-send-error'+error);
+            } else {
+              console.log('Email sent: ' + info.response);
+              try {
+                  fs.unlinkSync(newpath);
+                  console.log('--successfully deleted csv file');
+                } catch (err) {
+                  console.log('Error removing csv file');
+                }
+            }
+          })
+  
+        })
+      })
+
+    res.redirect('/users/conv/dash');
+    });
+}
+
+exports.org_new_meeting = (req, res, next) =>{
+  var error = "";
+  res.render('org-create-meeting', { error });
+}
+
+exports.org_create_meeting = (req, res, next) =>{
+  var userID = req.session.user.uId;
+  req.session.testid = 5;
+   var item = {
+     convEmail : req.body.convEmail,
+     name : req.body.eventname,
+     loc : req.body.location,
+     desc:  req.body.description,
+     date: req.body.eventdate,
+     s1start: req.body.s1start,
+     s1end: req.body.s1end,
+     s2start: req.body.s2start,
+     s2end: req.body.s2end,   
+     s3start: req.body.s3start,
+     s3end: req.body.s3end,
+     s4start: req.body.s4start,
+     s4end: req.body.s4end,
+     s5start: req.body.s5end,
+     s5end: req.body.s5end
+   }
+
+   User.findOne({
+     where: {
+       email: item.convEmail
+     }
+   }).then(convener=>{
+     if(convener == null){
+       var error = 'Error!! Convener not found';
+       res.render('org-create-meeting', { error });
+     }
+     else{
+      req.session.convEmail = item.convEmail;
+
+      // console.log(req.body);
+      var meetID;
+      Meeting.findOrCreate({
+        where: {
+          mName: item.name,
+          location: item.loc,
+          mDate: item.date 
+        }, defaults: {
+          mName: item.name,
+          mDesc: item.desc,             
+        }
+        }).spread((meeting, created) => {
+          console.log(meeting.get({
+            plain: true
+          }))
+          console.log(created)
+          meetID = meeting.mId;
+        }).then(()=>{  
+          console.log('first slot entry');   
+          Slot.findOrCreate({
+            where: {
+              sStart: item.s1start,
+              sEnd: item.s1end,
+              mId: meetID
+            }, defaults: {
+              status: 'pending', 
+            }
+          })
+      
+          if(item.s2start != ""){
+            console.log('second slot entry');
+            Slot.findOrCreate({
+              where: {
+                sStart: item.s2start,
+                sEnd: item.s2end,
+                mId: meetID
+              }, defaults: {
+                status: 'pending'
+              }
+            })
+          }
+      
+          if(item.s3start != ""){
+            console.log('third slot entry');
+            Slot.findOrCreate({
+              where: {
+                sStart: item.s3start,
+                sEnd: item.s3end,
+                mId: meetID
+              }, defaults: {
+                status: 'pending'
+              }
+            })
+          }
+      
+          if(item.s4start != ""){
+            console.log('fourth slot entry');
+            Slot.findOrCreate({
+              where: {
+                sStart: item.s4start,
+                sEnd: item.s4end,
+                mId: meetID
+              }, defaults: {
+                status: 'pending'
+              }
+            })
+          }
+      
+          if(item.s5start != ""){
+            console.log('fifth slot entry');
+            Slot.findOrCreate({
+              where: {
+                sStart: item.s5start,
+                sEnd: item.s5end,
+                mId: meetID
+              }, defaults: {
+                status: 'pending'
+              }
+            })
+          }
+      
+          }).then(()=>{  
+            UserMeet.findOrCreate({
+              where: {
+                uId: userID,
+                mId: meetID
+              }, defaults: {}
+            }).spread((usermeet, created) => {
+              console.log(usermeet.get({
+                plain: true
+              }))
+              console.log(created)
+            }).then(()=>{
+              req.session.meetID = meetID;
+              res.redirect('/users/org/upload-attend');              
+            })
+          })
+
+     }
+   })
+  }
+
+  exports.org_upload_attendees = (req, res, next) => {  
+    var meetID = req.session.meetID;
+    res.render('org-upload-attend', { meetID });
+  },
+
+  exports.org_create_attendees = (req, res, next) =>{
+    // console.log('meeting id: '+ req.params.meetID);
+    var meetID = req.params.meetID;
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+      var oldpath = files.filetoupload.path;
+      var newpath = './public/uploads/' + files.filetoupload.name+'-'+Date.now();
+      fs.rename(oldpath, newpath, function (err) {
+        if (err){
+          throw err;
+        } 
+        else{
+          var rowNum = 0;
+          let csvStream = csv.fromPath(newpath, { headers: true })
+          .on('data', function(record){  
+            
+            rowNum+=1;
+      
+          }).on('end', function(){
+            console.log('job done'); 
+            console.log('--ROW NUM: '+rowNum);
+      
+            var count = 0;
+            let csvStream = csv.fromPath(newpath, { headers: true })
+            .on('data', function(record){  
+            
+                  csvStream.pause();
+                  Attendee.findOrCreate({
+                    where: {
+                      aEmail: record.email,
+                      mId: meetID
+                    }, defaults: {
+                      aFname: record.firstname,
+                      aLname: record.lastname
+                    }
+                  }).spread((attendee, created) => {
+                    console.log(attendee.get({
+                      plain: true
+                    }))
+                    console.log('created:'+ created)
+                    count+=1;
+                    
+                  }).then(()=>{
+                    if(count == rowNum){
+                      // try {
+                      //   fs.unlinkSync(newpath);
+                      //   console.log('--successfully deleted csv file');
+                      // } catch (err) {
+                      //   console.log('Error removing csv file');
+                      // }
+                      req.session.meetID = meetID;
+                      res.redirect('/users/org/manage-meet');
+                    }
+                  })
+                  csvStream.resume();
+      
+            }).on('error', function(err){
+              console.log(err);
+            });
+          }).on('error', function(err){
+            console.log(err);
+          }); 
+        }          
+      })
+      
+  })
+  },
+
+  exports.org_manage_meeting = (req, res, next) => {    
+    Attendee.findAll({
+      where: {
+        mId: req.session.meetID
+      }, attributes: ['aFname', 'aLname', 'aEmail']
+    }).then(attendee=>{    
+      Slot.findAll({
+        where:{
+          mId: req.session.meetID
+        }, attributes: ['sStart', 'sEnd']
+      }).then(slot =>{
+        res.render('org-manage-meet', {attendee, slot});
+      })    
+    })
+  }
+
+  exports.org_confirm_meeting = (req, res, next) =>{
+    var meetid = req.session.meetID;
+    var convEmail = req.session.convEmail;
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      pool: true,
+      direct: true,    
+      auth: {
+        user: config.email,
+        pass: config.password
+      }
+    }); 
+  
+    Meeting.findOne({
+      where: {
+        mId: meetid
+      }, attributes: ['mId','mDesc', 'mName', 'location', 'mDate']
+    }).then(meeting=>{
+      // console.log(meeting)
+      // var meetID = meeting.mId      
+      Attendee.findAll({
+        where: {
+          mId: meetid
+        }, attributes: ['aId', 'aEmail']
+      }).then(attendee=>{
+        // res.json(attendee);
+
+        for(var i=0;i<attendee.length;i++){
+          var attendEmail = attendee[i].aEmail;
+          var attendId = attendee[i].aId;
+          // console.log('attendeeeeeID: '+attendId)
+  
+          var token = jwt.sign({
+            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24),          
+            mId: meetid,
+            aId: attendId,
+            convEmail: convEmail
+          }, config.secret);
+  
+          var mailOptions = {
+            from: 'youremail@gmail.com',
+            to: attendEmail,
+            subject: 'Meeting Request',
+            html: '<b>MEETING INFORMATION</b><br> NAME: &nbsp;'
+            + meeting.mName + '<br> DESCRIPTION: &nbsp;' + meeting.mDesc + '<br> LOCATION: &nbsp;' + meeting.location
+            + '<br>DATE: &nbsp;'+ meeting.mDate + ' <br> Please open the following link to select your time slot: <br>' 
+            + 'http://localhost:3000/attendee/'+token
+          };
+  
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log('email-send-error-to: '+attendEmail+' : '+error);          
+            } else {
+              console.log('Email sent-to: '+attendEmail+' : '+ info.response);            
+            }
+          })
+          if(i == attendee.length-1){
+            res.redirect('/users/org/dash');
+          }
+        } //end if 
+      })
+    })
+  }
+
+  exports.org_slot_status = (req, res, next) => {
+    var meetId = req.params.meetid;
+    Slot.findAll({
+      where: {
+        mId: meetId
+      }
+    }).then(slots=>{
+      
+      Attendee.findAll({
+        where: {
+          mId: meetId
+        }
+      }).then(attendees=>{
+        // res.json(attendees);
+        res.render('org-slot-status', { slots, attendees });
+      })
+      
+    })
+  
+  }
+
+
+
+
+
+
+
+
+
+
 
 exports.test_ics = (req, res, next) => {
   // var str = "02:00:00";
@@ -579,6 +1050,8 @@ exports.test_mail = (req, res, next) => {
 
   var transporter = nodemailer.createTransport({
     service: 'gmail',
+    direct: true,
+    pool: true,
     auth: {
       user: config.email,
       pass: config.password
@@ -591,7 +1064,7 @@ exports.test_mail = (req, res, next) => {
     subject: 'Sending Email using Node.js',
     html: 'mail from:  ' + name,
     attachments: [{
-      path:'./public/ics/event1541991998049.ics'
+      path:'./public/ics/event.ics'
     }]
   };
 
@@ -600,6 +1073,7 @@ exports.test_mail = (req, res, next) => {
       console.log('email-send-error'+error);
     } else {
       console.log('Email sent: ' + info.response);
+      
     }
   })
 

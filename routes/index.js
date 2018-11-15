@@ -8,10 +8,14 @@ const UserMeeting = require('../models/usermeeting');
 const userController = require('../controllers/user');
 const meetingController = require('../controllers/meeting');
 var bcrypt = require('bcryptjs');
+const Sequelize = require('sequelize');
 
 User.sync().then(()=>{
     Meeting.sync()
     .then(()=>{
+       
+        userController.up;
+        
         UserMeeting.sync().then(()=>{
             const x = bcrypt.hashSync('1234');
             User.findOrCreate({
@@ -39,16 +43,19 @@ User.sync().then(()=>{
           
                User.findOrCreate({
                     where: {
-                      email: 'saed@mail.com'
+                      email: 'danieltdaemon@gmail.com'
                   },
                  defaults: {
-                  uFname: 'saed',
-                  uLname: 'daes',
+                  uFname: 'daniel',
+                  uLname: 'daemon',
                   password: x,
                   uType: 'organiser'
                   }
               });
         });
+        //end
+
+
     }).then(()=>{
         Attendee.sync().then(()=>{
             Slot.sync();
@@ -90,12 +97,11 @@ router.get('/users', sessionChecker, (req, res) => {
 
 router.get('/attendee/:token', meetingController.attendee_slot_selec);
 
-router.post('/attendee/confirm-slot/:aid', meetingController.attendee_confirm_slot);
+router.post('/attendee/confirm-slot/:aid/:conv', meetingController.attendee_confirm_slot);
 
 // router.get('/testtoken', meetingController.test_token);
-router.get('/testmail', meetingController.test_mail);
-router.get('/testics', meetingController.test_ics);
-
+// router.get('/testmail', meetingController.test_mail);
+// router.get('/testics', meetingController.test_ics);
 
 router.get('/*', function(req, res, next){
     if(req.session.user){

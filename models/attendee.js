@@ -1,5 +1,6 @@
+const config = require('../config/index');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
+const sequelize = new Sequelize(config.dburl);
 const Slot = require('../models/slot');
 const Meeting = require('../models/meeting');
 

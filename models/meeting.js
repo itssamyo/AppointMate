@@ -1,5 +1,6 @@
+const config = require('../config/index');
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('postgres://localhost:5432/lsapp');
+const sequelize = new Sequelize(config.dburl);
 
 const Meeting = sequelize.define('meetings', {
 

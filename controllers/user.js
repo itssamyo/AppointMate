@@ -1,7 +1,8 @@
 const User = require('../models/user');
 var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
 var multer = require('multer');
+const Sequelize = require('sequelize');
+var nodemailer = require('nodemailer');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -13,6 +14,16 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage });
 var config = require('../config/index');
+
+
+// exports.up = (queryInterface, Sequelize) =>{
+//     queryInterface.addColumn(
+//         'users',
+//         'oUid',
+//        Sequelize.BOOLEAN
+//       );
+// }
+
 
 // Redirect users from /users to /users/'user type'/dash (incomplete)
 exports.user_redirect = (req, res, next) => {
@@ -118,13 +129,25 @@ exports.user_list_admin = (req, res, next) => {
 
 // Add Users to AppointMate
 exports.add_user = (req, res, next) => {
-  var email = req.body.email, password = req.body.password, fname = req.body.fname,
-  lname = req.body.lname, utype = req.body.utype;
-  // res.json(req.body);
+  var email = req.body.email, 
+  password = req.body.password, 
+  fname = req.body.fname,
+  lname = req.body.lname, 
+  utype = req.body.utype;
+
+  var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    pool: true,
+    auth: {
+      user: config.email,
+      pass: config.password
+    }
+  }); 
+  
   const x = bcrypt.hashSync(password);
   User.findOrCreate({
     where: {
-      email: req.body.email
+      email: email
     },
       defaults: {
       password: x,
@@ -141,6 +164,22 @@ exports.add_user = (req, res, next) => {
         req.session.alert = exists;
         res.redirect('/users/admin/dash');
       } else {
+        var mailOptions = {
+            to: email,
+            subject: 'Appointmate User Account',
+            html: 'Congradulations, a '+ utype +' account has been created for you in Appointmate.'+
+            '<br>Please use the following information to login.<br>'+
+            'USERNAME: &nbsp;'+ email + '<br>PASSWORD: &nbsp'+ password,            
+          };
+
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log('email-send-error'+error);
+            } else {
+              console.log('Email sent: ' + info.response);
+              
+            }
+          });
         res.redirect('/users/admin/dash');
       }
   });
@@ -246,3 +285,4 @@ exports.org_dash_csv = (req, res, next) => {
           res.end("File is uploaded");
       });
   };
+  

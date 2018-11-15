@@ -1,10 +1,10 @@
-<div class="container">
-    <h3>Convener Dashboard- User: {{email}}</h3><br>
+<div class="container"><br>
+    <h4>CONVENER DASHBOARD</h4><br>
     <a href="/users/conv/new-meeting" style="float:right"><button class="btn btn-primary">create meeting</button></a>
     <br>
-    <div><h4>Scheduled meetings</h4></div><br>
-    <div class="row">        
-         <table class="table table-striped">
+    <h6>SCHEDULED MEETINGS</h6>
+    <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:7px;">        
+         <table class="table table-hover">
             <thead>
             <tr>
                 <th>Name</th>
@@ -28,10 +28,10 @@
             </tbody>
         </table>
     </div>
-    <br>
-    <div><h4>Authorised Organisers</h4></div><br>
-    <div class="row" style=" height: 300px; overflow: scroll;">
-         <table class="table table-striped">
+    <br><br>
+    <h6>AVAILABLE ORGANIZERS</h6>
+    <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:7px;">
+         <table class="table table-hover">
             <thead>
             <tr>
                 <th>Email</th>
@@ -45,6 +45,7 @@
                 <td>{{org.email}}</td>
                 <td>{{org.uFname}}</td>
                 <td>{{org.uLname}}</td>
+                <td><a href="/users/conv/auth-org/{{ org.uId }}" class="btn btn-success btn-sm">Select</a></td>
             </tr>
             {{/each}}
             </tbody>
