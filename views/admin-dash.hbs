@@ -1,64 +1,74 @@
-<div class="container"><br>
-  <h4>DASHBOARD</h4><br>
-  <h6>NEW USER</h6>
-   {{# if exists}}
-        <div class="alert alert-danger alert-danger">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Error! </strong> User already exists.
+<div class="container">
+        <div class="row">
+            <div class="col"><br>
+                <h4 style="text-align:center">DASHBOARD</h4><br>         
+                {{# if exists}}
+                        <div class="alert alert-danger alert-danger">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <strong>Error! </strong> User already exists.
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+        <div class="row">
+            <div class="col-sm-2">
+                
+            </div>
+            <div class="col">
+            <div class="row" style="height: auto; box-shadow: 0px 0px 15px -2px;border-radius:7px; padding:30px;">  
+                <div class="col">      
+                    <h6>NEW USER</h6>   
+                    <form action="/users/admin/addUser" method="POST">
+                            <div class="form-group">
+                                <input type="email" name="email" class="form-control" placeholder="email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="password" class="form-control" placeholder="password" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="fname" class="form-control" placeholder="first name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="lname" class="form-control" placeholder="last name" required>
+                            </div>
+                            <div class="form-group">
+                            <label for="sel1">User Type:</label>
+                            <select class="form-control" name="utype">
+                                <option disabled selected value> -- select an option -- </option>
+                                <option value="admin">Administrator</option>
+                                <option value="convener">Convener</option>
+                                <option value="organiser">Organiser</option>
+                            </select>
+                            </div>
+
+                        <button type="submit" class="btn btn-primary" style="float:right">Add User</button>
+                    </form>
+                </div> 
+            </div>
+            <br>
+            <br>&nbsp;&nbsp;<h6>USER ACCOUNTS</h6>
+            <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:7px;">        
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Firstname</th>
+                        <th>Email</th>
+                        <th>CreatedAt</th>
+                        <th>Type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{# each result as |res| }}
+                    <tr>
+                        <td>{{ res.uFname }}</td>
+                        <td>{{ res.email }}</td>
+                        <td>{{ res.createdAt }}</td>
+                        <td>{{ res.uType }}</td>
+                    </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>        
+            </div>
         </div>
-    {{/if}}
-    <div class="row" style="height: auto; box-shadow: 0px 0px 15px -2px;border-radius:7px; padding:30px;">  
-        <div class="col">         
-            <form action="/users/admin/addUser" method="POST">
-                    <div class="form-group">
-                        <input type="email" name="email" class="form-control" placeholder="email" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="password" class="form-control" placeholder="password" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="fname" class="form-control" placeholder="first name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" name="lname" class="form-control" placeholder="last name" required>
-                    </div>
-                    <div class="form-group">
-                    <label for="sel1">User Type:</label>
-                    <select class="form-control" name="utype">
-                        <option disabled selected value> -- select an option -- </option>
-                        <option value="admin">Administrator</option>
-                        <option value="convener">Convener</option>
-                        <option value="organiser">Organiser</option>
-                    </select>
-                    </div>
-
-                <button type="submit" class="btn btn-primary" style="float:right">Add User</button>
-            </form>
-        </div> 
-    </div>
-    <br>
-    <br>&nbsp;&nbsp;<h6>USER ACCOUNTS</h6>
-    <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:7px;">        
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>Firstname</th>
-                <th>Email</th>
-                <th>CreatedAt</th>
-                <th>Type</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{# each result as |res| }}
-            <tr>
-                <td>{{ res.uFname }}</td>
-                <td>{{ res.email }}</td>
-                <td>{{ res.createdAt }}</td>
-                <td>{{ res.uType }}</td>
-            </tr>
-            {{/each}}
-            </tbody>
-        </table>
-
-    </div>
 </div>
