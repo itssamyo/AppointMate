@@ -1,9 +1,21 @@
+
+<link href="stylesheets/style.css" rel="stylesheet" type="text/css">
+
 <div class="container"><br>
   <div class="row">
     <div style="width:500px; margin:0 auto">
-      <p style="color:red">{{error}}</p>
+      
     <form method="POST" action="/login">
       <div id="form-group">
+        <h1><center>Welcome To AppointMate</center></h1> 
+
+		<div><center><img src="/images/Logo.png" id="logo"</center></div>
+   
+		    
+        {{# if isErr }}
+          <div class="alert alert-danger">  <strong>{{error}}</strong></div>
+        {{/ if }}
+
         <label>Email:</label>
           <input class="form-control" name="email" type="text" />
       </div>
@@ -19,3 +31,5 @@
     </div>
   </div>
 </div>
+
+

@@ -1,1 +1,59 @@
 
+-- Login Page Error Message --
+@-webkit-keyframes clips {
+50% {
+-webkit-clip-path: polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%);
+       clip-path: polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%);
+}
+}
+
+@keyframes clips {
+50% {
+-webkit-clip-path: polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%);
+       clip-path: polygon(40% 0%, 40% 20%, 100% 20%, 100% 80%, 40% 80%, 40% 100%, 0% 50%);
+}
+}
+/* Center the demo */
+html, body {
+height: 100%;
+}
+
+
+/*-- Background wallpaper--*/
+body{background:url(/images/back.jpg)}
+
+
+#logo
+ {
+    opacity: 0.7;
+    filter: alpha(opacity=40); 
+    width: 150px;
+    height:200px;
+
+}
+#logo:hover {
+    opacity: 1.0;
+    filter: alpha(opacity=100);}
+    
+/*-- Header --*/
+.header
+{
+	list-style-type: none;
+	
+}
+#h1-top{
+    text-align: center;
+    font-family:Helvetica;
+    font-weight: 600;
+}
+#h1-btm{
+    text-align: center;
+    font-family:Helvetica; 
+    font-weight: 600;
+}
+#h1-table{
+    text-align: center;
+    font-family:Helvetica; 
+    font-weight: 600;
+    padding-left:100px;
+}
