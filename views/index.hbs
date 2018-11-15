@@ -1,21 +1,24 @@
-
 <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
 <div class="container"><br>
+<div><center><img src="/images/Logo.png" id="logo"</center></div>
   <div class="row">
     <div style="width:500px; margin:0 auto">
-      
-    <form method="POST" action="/login">
-      <div id="form-group">
-        <h1><center>Welcome To AppointMate</center></h1> 
-
-		<div><center><img src="/images/Logo.png" id="logo"</center></div>
-   
-		    
+      <p style="color:red">{{error}}</p>
+        	
         {{# if isErr }}
           <div class="alert alert-danger">  <strong>{{error}}</strong></div>
         {{/ if }}
 
+
+
+    <form method="POST" action="/login">
+      <div id="form-group">
         <label>Email:</label>
           <input class="form-control" name="email" type="text" />
       </div>
@@ -25,11 +28,42 @@
       </div>
       <br/>
       <div style="text-align:center">
-      <input class="btn btn-primary" type="submit" value="Log In"/>
+      <div>
+      <input class="btn btn-info" type="submit" value="Log In" id="loginBtn"/>
       </div>
+      <div>
+      <input class="btn btn-info" value="Register" data-toggle="modal" data-target="#myModal" id="registerBtn">
+      </div>
+      
+      </div>
+      
     </form>
     </div>
   </div>
+
+  <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Register</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <strong>Request access:</strong> Please email admin@appointmate.com
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
 </div>
-
-
