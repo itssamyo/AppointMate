@@ -270,12 +270,12 @@ exports.conv_create_attendees = (req, res, next) =>{
               
             }).then(()=>{
               if(count == rowNum){
-                // try {
-                //   fs.unlinkSync(newpath);
-                //   console.log('--successfully deleted csv file');
-                // } catch (err) {
-                //   console.log('Error removing csv file');
-                // }
+                try {
+                  fs.unlinkSync(newpath);
+                  console.log('--successfully deleted csv file');
+                } catch (err) {
+                  console.log('Error removing csv file');
+                }
                 req.session.meetID = meetID;
                 res.redirect('/users/conv/manage-meet');
               }
@@ -858,12 +858,12 @@ exports.org_create_meeting = (req, res, next) =>{
                     
                   }).then(()=>{
                     if(count == rowNum){
-                      // try {
-                      //   fs.unlinkSync(newpath);
-                      //   console.log('--successfully deleted csv file');
-                      // } catch (err) {
-                      //   console.log('Error removing csv file');
-                      // }
+                      try {
+                        fs.unlinkSync(newpath);
+                        console.log('--successfully deleted csv file');
+                      } catch (err) {
+                        console.log('Error removing csv file');
+                      }
                       req.session.meetID = meetID;
                       res.redirect('/users/org/manage-meet');
                     }

@@ -1,87 +1,96 @@
-<div class="container" ng-app="myApp" ng-controller="myCtrl" ng-init="userReload('{{convener}}')">    
-    <br><h5 style="text-align:center"><b>MANAGE ACCOUNTS</b></h5><br>     
-        <h6>CONVENERS</h6>
-        <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:3px;">
-            
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>FirstName</th>
-                    <th>LastName</th>
-                    <th>Email</th>
-                    <th>CreatedAt</th>
-                </tr>
-                </thead>
-                <tbody>              
-            {{# each convener as |res| }}           
-                <tr>
-                    <td>{{ res.uFname }}</td>
-                    <td>{{ res.uLname }}</td>
-                    <td>{{ res.email }}</td>
-                    <td>{{ res.createdAt }}</td>
-                    {{!-- <td>{{ res.uType }}</td> --}}
-                    <td><a href="/users/admin/editUser/{{res.email}}" class="btn btn-primary btn-sm">Update</a></td>
-                    <td><button ng-click="myFunction('{{res.email}}')" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button></td>
-                </tr>            
-            {{/each}}
-                </tbody>
-            </table>
-         
+    <div class="angularSU" ng-app="myApp" ng-controller="myCtrl" ng-init="userReload('{{convener}}')">
+        <div class="row">
+            <div class="col">
+                <br><h5 style="text-align:center"><b>MANAGE ACCOUNTS</b></h5><br> 
+            </div>
         </div>
-    <br>
-    <br><br><h6>ORGANISERS</h6>
-    <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:3px;">        
-         <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>Firstname</th>
-                <th>LastName</th>
-                <th>Email</th>                
-                <th>CreatedAt</th>
-            </tr>
-            </thead>
-            <tbody>
-             {{# each organiser as |res| }}
-            <tr>
-                <td>{{ res.uFname }}</td>
-                <td>{{ res.uLname }}</td>
-                <td>{{ res.email }}</td>                
-                <td>{{ res.createdAt }}</td>
-               
-                {{!-- <td>{{ res.uType }}</td> --}}
-                <td><a href="/users/admin/editUser/{{res.email}}" class="btn btn-primary btn-sm">Update</a></td>
-                <td><button ng-click="myFunction('{{res.email}}')" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button></td>
-            </tr>
-            {{/each}}         
-            </tbody>
-        </table>
-</div>
+        <div class="row">      
+            <div class="col">                                        
+                        <h6>CONVENERS</h6>
+                        <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:3px;">
+                            
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>FirstName</th>
+                                    <th>LastName</th>
+                                    <th>Email</th>
+                                    <th>CreatedAt</th>
+                                </tr>
+                                </thead>
+                                <tbody>              
+                            {{# each convener as |res| }}           
+                                <tr>
+                                    <td>{{ res.uFname }}</td>
+                                    <td>{{ res.uLname }}</td>
+                                    <td>{{ res.email }}</td>
+                                    <td>{{ res.createdAt }}</td>
+                                    {{!-- <td>{{ res.uType }}</td> --}}
+                                    <td><a href="/users/admin/editUser/{{res.email}}" class="btn btn-primary btn-sm">Update</a></td>
+                                    <td><button ng-click="myFunction('{{res.email}}')" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button></td>
+                                </tr>            
+                            {{/each}}
+                                </tbody>
+                            </table>
+                        
+                        </div>
+                    <br>
+                    <br><br><h6>ORGANISERS</h6>
+                    <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:3px;">        
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Firstname</th>
+                                <th>LastName</th>
+                                <th>Email</th>                
+                                <th>CreatedAt</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{# each organiser as |res| }}
+                            <tr>
+                                <td>{{ res.uFname }}</td>
+                                <td>{{ res.uLname }}</td>
+                                <td>{{ res.email }}</td>                
+                                <td>{{ res.createdAt }}</td>
+                            
+                                {{!-- <td>{{ res.uType }}</td> --}}
+                                <td><a href="/users/admin/editUser/{{res.email}}" class="btn btn-primary btn-sm">Update</a></td>
+                                <td><button ng-click="myFunction('{{res.email}}')" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">Delete</button></td>
+                            </tr>
+                            {{/each}}         
+                            </tbody>
+                        </table>
+                </div>
 
- <!-- The Modal -->
-  <div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">      
-        <!-- Modal Header -->
-        <form action="/users/admin/delUser" method="POST">
-            <div class="modal-header">
-            <h6 class="modal-title">DELETE USER:</h6>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>        
-            <!-- Modal body -->
-            <div class="modal-body">
-            <input type="text" name="email" class="form-control" value=[[selectEmail]] readonly>          
-            </div>        
-            <!-- Modal footer -->
-            <div class="modal-footer">
-            {{!-- <button type="button" class="btn btn-danger" ng-click="confirmDelete()" data-dismiss="modal">Confirm Delete</button> --}}
-            <button type="submit" class="btn btn-danger">Confirm Delete</button>
-            </div>  
-        </form>      
-      </div>
+                <!-- The Modal -->
+                <div class="modal" id="myModal">
+                    <div class="modal-dialog">
+                    <div class="modal-content">      
+                        <!-- Modal Header -->
+                        <form action="/users/admin/delUser" method="POST">
+                            <div class="modal-header">
+                            <h6 class="modal-title">DELETE USER:</h6>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>        
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                            <input type="text" name="email" class="form-control" value=[[selectEmail]] readonly>          
+                            </div>        
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                            {{!-- <button type="button" class="btn btn-danger" ng-click="confirmDelete()" data-dismiss="modal">Confirm Delete</button> --}}
+                            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+                            </div>  
+                        </form>      
+                    </div>
+                    </div>
+                </div>
+                {{!-- //model end --}}
+            </div>
+        </div>
     </div>
-  </div>
-  {{!-- //model end --}}
-</div>
+
 <br><br>
 <script>
 var app = angular.module('myApp', []);

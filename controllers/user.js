@@ -279,7 +279,36 @@ exports.org_dash_csv = (req, res, next) => {
   exports.update_passwd = (req, res, next) => {
       var passwd = req.body.password;
       var newPasswd = req.body.newPassword;
-      var confNewPasswd = req.body.confNewPasswd;
-      res.json(req.body);
+      var confNewPasswd = req.body.confirmPassword;
+      var userid = req.session.user.uId;
+      var error = "";
+      User.findOne({
+          where: {
+              uId: userid
+          }
+      }).then(user=>{
+          if(!user.validPassword(passwd)){
+              res.render('edit-passwd', { error: "Password Incorrect" , usert: req.session.user.uType})
+          }
+          else if(newPasswd != confNewPasswd){
+              res.render('edit-passwd', {error: "New password does not match", usert: req.session.user.uType})
+          }
+          else{
+            var passx = bcrypt.hashSync(newPasswd);
+            User.update({
+                password: passx
+            },{
+              where:{
+                uId: userid
+              }  
+            }).then(result=>{
+                console.log('result:'+result);
+                res.redirect('/');
+            })
+          }
+          
+      })
+      
+    //   res.json(req.body);
   }
   

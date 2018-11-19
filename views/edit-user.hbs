@@ -1,28 +1,35 @@
-<div class="container"><br>
-  <div class="row">
-    <div style="width:700px; margin:0 auto">
-    <form method="POST" action="/users/admin/updateUser">
-      <div id="form-group">
-        <label>Email:</label>
-          <input class="form-control" name="email" type="text" value="{{user.email}}" readonly/>
-      </div>
-      <div id="form-group">
-        <label>user type:</label>
-          <input class="form-control" name="usertype" type="text" value="{{user.uType}}"/>
-      </div>
-      <div id="form-group">
-        <label>first name:</label>
-          <input class="form-control" name="firstname" type="text" value="{{user.uFname}}"/>
-      </div>
-      <div id="form-group">
-        <label>last name:</label>
-          <input class="form-control" name="lastname" type="text" value="{{user.uLname}}"/>
-      </div>
-      <br/>
-      <div style="text-align:center">
-      <input class="btn btn-success" type="submit" value="Update"/>
-      </div>
-    </form>
+
+<br>
+<div class="row">
+        <div class="col">
+            <br><h5 style="text-align:center"><b>UPDATE USER</b></h5>
+        </div>
     </div>
+  <div class="row">   
+    <div class="col">    
+      <div style="width:700px; margin:0 auto">
+        <form method="POST" action="/users/admin/updateUser">
+          <div id="form-group">
+            <label>Email:</label>
+              <input class="form-control" name="email" type="text" value="{{user.email}}" readonly/>
+          </div>
+          <div id="form-group">
+            <label>user type:</label>
+              <input class="form-control" name="usertype" type="text" value="{{user.uType}}"/>
+          </div>
+          <div id="form-group">
+            <label>first name:</label>
+              <input class="form-control" name="firstname" type="text" value="{{user.uFname}}"/>
+          </div>
+          <div id="form-group">
+            <label>last name:</label>
+              <input class="form-control" name="lastname" type="text" value="{{user.uLname}}"/>
+          </div>
+          <br/>
+          <div style="text-align:center">
+          <input class="btn btn-success" type="submit" value="Update"/>
+          </div>
+        </form>
+      </div>
+     </div>
   </div>
-</div>

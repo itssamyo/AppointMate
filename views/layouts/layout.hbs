@@ -3,7 +3,8 @@
   <head>
     <title>{{title}}</title>
     <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">    
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -21,9 +22,6 @@
           <a class="nav-link" href="/users/admin/manage">ManageAccount</a>
         </li>
         {{/ equal}}
-        {{!-- <li class="nav-item">
-          <a class="nav-link" href="#">{{ user }}</a>
-        </li> --}}
       </ul>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -55,7 +53,17 @@
         </ul>
       </div>
     </nav>
-    {{{body}}}
+    <div class="container">
+      <div class="row">        
+        <div class="col-sm-2">
+            <img src="/images/Logo.png" style="margin-left:-28px;margin-top:50px" id="logo" width="140px" height=auto/>
+        </div>
+        <div class="col">
+          {{{body}}}
+        </div>
+      </div>
+      
+    </div>
   </body>
   
 </html>
