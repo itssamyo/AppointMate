@@ -10,8 +10,21 @@
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   </head>
   <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="background-color:#a91f2c!important">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="background-color:#232f3e!important;border-radius:0px">
       <a class="navbar-brand" href="/users">Appointmate</a>
+      <ul class="navbar-nav">
+         <li class="nav-item">
+          <a class="nav-link" href="/users">Home</a>
+        </li>
+        {{# equal usert "admin"}}
+        <li class="nav-item">          
+          <a class="nav-link" href="/users/admin/manage">ManageAccount</a>
+        </li>
+        {{/ equal}}
+        {{!-- <li class="nav-item">
+          <a class="nav-link" href="#">{{ user }}</a>
+        </li> --}}
+      </ul>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -20,7 +33,23 @@
         <ul class="navbar-nav mr-auto">
         </ul>
         <ul class="navbar-nav navbar-right">
-          <li class="nav-item">
+          {{# equal usert "convener"}}         
+          <li class="nav-item dropdown">                     
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color:white; margin-right:15px"><i class="fas fa-user"></i></a>
+            <div class="dropdown-menu" style="left:-30px">
+              <a class="dropdown-item" href="/users/conv/change-passwd">Change Password</a>            
+            </div>
+          </li>   
+          {{/ equal}}
+          {{# equal usert "organiser"}}         
+          <li class="nav-item dropdown">                     
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown" style="color:white; margin-right:15px"><i class="fas fa-user"></i></a>
+            <div class="dropdown-menu" style="left:-30px">
+              <a class="dropdown-item" href="/users/org/change-passwd">Change password</a>           
+            </div>
+          </li>   
+          {{/ equal}}    
+          <li class="nav-item">                     
             <a class="nav-link" href="/logout" style="color:white"><i class="fas fa-sign-out-alt"></i>Logout</a>
           </li>
         </ul>

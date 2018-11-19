@@ -1,7 +1,7 @@
 <div class="container" ng-app="myApp" ng-controller="myCtrl" ng-init="userReload('{{convener}}')">    
-    <br><h3 style="text-align:center">Manage Accounts</h3><br>     
-        <h5>CONVENERS</h5>
-        <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:7px;">
+    <br><h5 style="text-align:center"><b>MANAGE ACCOUNTS</b></h5><br>     
+        <h6>CONVENERS</h6>
+        <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:3px;">
             
             <table class="table table-hover">
                 <thead>
@@ -29,8 +29,8 @@
          
         </div>
     <br>
-    <br><br><h5>ORGANISERS</h5>
-    <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:7px;">        
+    <br><br><h6>ORGANISERS</h6>
+    <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:3px;">        
          <table class="table table-hover">
             <thead>
             <tr>
@@ -64,7 +64,7 @@
         <!-- Modal Header -->
         <form action="/users/admin/delUser" method="POST">
             <div class="modal-header">
-            <h4 class="modal-title">Delete User</h4>
+            <h6 class="modal-title">DELETE USER:</h6>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>        
             <!-- Modal body -->
@@ -82,7 +82,7 @@
   </div>
   {{!-- //model end --}}
 </div>
-
+<br><br>
 <script>
 var app = angular.module('myApp', []);
 

@@ -44,14 +44,14 @@ exports.conv_dash = (req, res, next) => {
                 num++;
                 if(num == len){
                   // res.json(sample);
-                  res.render('conv-dash', {organiser, meeting}); 
+                  res.render('conv-dash', {organiser, meeting, usert: req.session.user.uType}); 
                 }
               })             
             }   
           }
           else{
             meeting = "";
-            res.render('conv-dash', {organiser, meeting});
+            res.render('conv-dash', {organiser, meeting, usert: req.session.user.uType});
           }          
           })          
     
@@ -85,14 +85,14 @@ exports.org_dash = (req, res, next) => {
             num++;
             if(num == len){
               // res.json(sample);
-              res.render('org-dash', { meeting }); 
+              res.render('org-dash', { meeting , usert: req.session.user.uType}); 
             }
           })             
         }   
       }
       else{
         meeting = "";
-        res.render('org-dash', { meeting });
+        res.render('org-dash', { meeting , usert: req.session.user.uType});
       }          
       })  
 
@@ -100,7 +100,7 @@ exports.org_dash = (req, res, next) => {
   };
 
 exports.conv_new_meeting = (req, res, next) =>{
-    res.render('conv-create-meeting');    
+    res.render('conv-create-meeting', { usert: req.session.user.uType });    
 }
 
 exports.conv_create_meeting = (req, res, next) =>{
@@ -223,7 +223,7 @@ Meeting.findOrCreate({
 
 exports.conv_upload_attendees = (req, res, next) => {  
   var meetID = req.session.meetID;
-  res.render('conv-upload-attend', { meetID });
+  res.render('conv-upload-attend', { meetID , usert: req.session.user.uType});
 },
 
 exports.conv_create_attendees = (req, res, next) =>{
@@ -311,7 +311,7 @@ exports.conv_manage_meeting = (req, res, next) => {
         mId: req.session.meetID
       }, attributes: ['sStart', 'sEnd']
     }).then(slot =>{
-      res.render('conv-manage-meet', {attendee, slot});
+      res.render('conv-manage-meet', {attendee, slot, usert: req.session.user.uType});
     })    
   })
 }
@@ -408,7 +408,7 @@ exports.attendee_slot_selec = (req, res, next) =>{
         }
       }).then(slots=>{
         // res.json(slots);
-        res.render('attend_slot_selec', { slots, aid, convEmail }) 
+        res.render('attend_slot_selec', { slots, aid, convEmail , usert: req.session.user.uType}) 
       })
     }
   })
@@ -580,7 +580,7 @@ exports.conv_slot_status = (req, res, next) => {
       }
     }).then(attendees=>{
       // res.json(attendees);
-      res.render('conv-slot-status', { slots, attendees });
+      res.render('conv-slot-status', { slots, attendees, usert: req.session.user.uType });
     })
     
   })
@@ -590,7 +590,7 @@ exports.conv_slot_status = (req, res, next) => {
 exports.conv_auth_org = (req, res, next) => {
   var orgid = req.params.orgId;
   var convid = req.session.user.uId;
-  res.render('conv-auth-org', { orgid, convid });
+  res.render('conv-auth-org', { orgid, convid , usert: req.session.user.uType});
 }
 
 exports.conv_post_auth_org = (req, res, next) => {
@@ -671,7 +671,7 @@ exports.conv_post_auth_org = (req, res, next) => {
 
 exports.org_new_meeting = (req, res, next) =>{
   var error = "";
-  res.render('org-create-meeting', { error });
+  res.render('org-create-meeting', { error , usert: req.session.user.uType});
 }
 
 exports.org_create_meeting = (req, res, next) =>{
@@ -702,7 +702,7 @@ exports.org_create_meeting = (req, res, next) =>{
    }).then(convener=>{
      if(convener == null){
        var error = 'Error!! Convener not found';
-       res.render('org-create-meeting', { error });
+       res.render('org-create-meeting', { error , usert: req.session.user.uType});
      }
      else{
       req.session.convEmail = item.convEmail;
@@ -811,7 +811,7 @@ exports.org_create_meeting = (req, res, next) =>{
 
   exports.org_upload_attendees = (req, res, next) => {  
     var meetID = req.session.meetID;
-    res.render('org-upload-attend', { meetID });
+    res.render('org-upload-attend', { meetID , usert: req.session.user.uType});
   },
 
   exports.org_create_attendees = (req, res, next) =>{
@@ -893,7 +893,7 @@ exports.org_create_meeting = (req, res, next) =>{
           mId: req.session.meetID
         }, attributes: ['sStart', 'sEnd']
       }).then(slot =>{
-        res.render('org-manage-meet', {attendee, slot});
+        res.render('org-manage-meet', {attendee, slot, usert: req.session.user.uType });
       })    
     })
   }
@@ -976,7 +976,7 @@ exports.org_create_meeting = (req, res, next) =>{
         }
       }).then(attendees=>{
         // res.json(attendees);
-        res.render('org-slot-status', { slots, attendees });
+        res.render('org-slot-status', { slots, attendees , usert: req.session.user.uType});
       })
       
     })

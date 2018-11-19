@@ -63,15 +63,16 @@ body{background:url(/images/back.jpg)}
 #loginBtn
 {
     border-radius: 8px;
-    background-color:#BE3D3C;
+    background-color:#232f3e;
     color:white;
     font-weight:800px;
     font-size:18px;
-    width:70%;
+    width:50%;
+    border: 1px solid white
 }
 #loginBtn:hover{background-color: #333333; color:white;font-weight:800px;}
 
-#registerBtn
+/* #registerBtn
 {
     border-radius: 8px; 
     background-color:#BE3D3C;
@@ -79,8 +80,8 @@ body{background:url(/images/back.jpg)}
     font-weight:800px;
     font-size:18px;
     width:70%;
-}
-#registerBtn:hover{background-color: #333333; color:white;font-weight:800px;}
+} */
+/* #registerBtn:hover{background-color: #333333; color:white;font-weight:800px;} */
 
 
 .danger {background-color: #BE3D3C; color:white;}

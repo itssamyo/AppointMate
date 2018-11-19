@@ -16,20 +16,6 @@ var upload = multer({ storage: storage });
 var config = require('../config/index');
 
 
-// exports.up = (queryInterface, Sequelize) =>{
-//     queryInterface.addColumn(
-//         'users',
-//         'oUid',
-//        Sequelize.BOOLEAN
-//       );
-// }
-
-
-// Redirect users from /users to /users/'user type'/dash (incomplete)
-exports.user_redirect = (req, res, next) => {
-  res.render('index')
-};
-
 // Login and Redirect to relevant user page
 exports.login = (req, res, next) => {
   var email = req.body.email;
@@ -104,7 +90,7 @@ exports.org_session_check = (req, res, next) => {
 };
 
 // List Users on the Admin Dashboard
-exports.user_list_admin = (req, res, next) => {
+exports.admin_list_users = (req, res, next) => {
   var exists;
   if(req.session.alert){
     exists = req.session.alert;
@@ -115,7 +101,7 @@ exports.user_list_admin = (req, res, next) => {
         attributes: ['email', 'uFname','uType', 'createdAt']
     }).then(result => {
         console.log(result);
-        res.render('admin-dash', {result, exists});
+        res.render('admin-dash', {result, exists, usert: req.session.user.uType});
     });
     }
     else{
@@ -203,7 +189,7 @@ exports.edit_user = (req, res, next) =>
     var email = req.params.email;
     User.findOne({where: {email: email}}).then(function(user){
         console.log(user);
-        res.render('edit-user', {user});
+        res.render('edit-user', {user, usert: req.session.user.uType});
     });
 },
 
@@ -228,7 +214,7 @@ exports.update_user = (req, res, next) =>{
 exports.org_dash = (req, res, next) => {
   if(req.session.user){
       var email = req.session.user.email;
-      res.render('org-dash',{email});
+      res.render('org-dash',{email, usert: req.session.user.uType});
   }
   else{
       res.status(404).send('Not found');
@@ -239,7 +225,7 @@ exports.org_dash = (req, res, next) => {
 exports.conv_dash = (req, res, next) => {
   if(req.session.user){
       var email = req.session.user.email;
-      res.render('conv-dash', {email});
+      res.render('conv-dash', {email, usert: req.session.user.uType});
   }
   else{
       res.status(404).send('Not found');
@@ -254,7 +240,7 @@ exports.admin_manage_users = (req, res, next) => {
             User.findAll({where: {uType: 'organiser'},
             attributes: ['email', 'uFname','uLname', 'uType', 'createdAt']
             }).then(organiser =>{
-                res.render('admin-manage', {convener, organiser});
+                res.render('admin-manage', {convener, organiser, usert: req.session.user.uType});
             });
 
         });
@@ -285,4 +271,15 @@ exports.org_dash_csv = (req, res, next) => {
           res.end("File is uploaded");
       });
   };
+
+  exports.change_passwd = (req, res, next) => {
+    res.render('edit-passwd', { usert: req.session.user.uType});
+  }
+
+  exports.update_passwd = (req, res, next) => {
+      var passwd = req.body.password;
+      var newPasswd = req.body.newPassword;
+      var confNewPasswd = req.body.confNewPasswd;
+      res.json(req.body);
+  }
   

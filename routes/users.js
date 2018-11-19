@@ -4,8 +4,6 @@ const userController = require('../controllers/user');
 const meetingController = require('../controllers/meeting');
 var jwt = require('jsonwebtoken');
 
-// GET request for /users redirection (incomplete)
- router.get('/', userController.user_redirect);
 
 // GET request for admin session check
 router.get('/admin', userController.admin_session_check);
@@ -17,7 +15,7 @@ router.get('/conv', userController.conv_session_check);
 router.get('/org', userController.org_session_check);
 
 // GET request for User List (admin)
-router.get('/admin/dash', userController.user_list_admin);
+router.get('/admin/dash', userController.admin_list_users);
 
 // GET request to manage users
 router.get('/admin/manage', userController.admin_manage_users);
@@ -66,6 +64,10 @@ router.get('/conv/auth-org/:orgId', meetingController.conv_auth_org);
 
 router.post('/conv/auth-org/:convId/:orgId', meetingController.conv_post_auth_org);
 
+router.get('/conv/change-passwd', userController.change_passwd);
+
+router.post('/conv/change-passwd', userController.update_passwd);
+
 //org
 router.get('/org/new-meeting', meetingController.org_new_meeting);
 
@@ -80,6 +82,10 @@ router.get('/org/manage-meet', meetingController.org_manage_meeting);
 router.get('/org/confirm-meet', meetingController.org_confirm_meeting);
 
 router.get('/org/slot-status/:meetid', meetingController.org_slot_status);
+
+router.get('/org/change-passwd', userController.change_passwd);
+
+router.post('/org/change-passwd', userController.update_passwd);
 
 
 
