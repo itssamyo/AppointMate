@@ -100,7 +100,7 @@ router.get('/attendee/:token', meetingController.attendee_slot_selec);
 router.post('/attendee/confirm-slot/:aid/:conv', meetingController.attendee_confirm_slot);
 
 // router.get('/testtoken', meetingController.test_token);
-// router.get('/testmail', meetingController.test_mail);
+router.get('/testmail', meetingController.test_mail);
 // router.get('/testics', meetingController.test_ics);
 
 router.get('/*', function(req, res, next){

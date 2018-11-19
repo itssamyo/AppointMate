@@ -1077,5 +1077,5 @@ exports.test_mail = (req, res, next) => {
     }
   })
 
-  res.end();
+  res.send('mail test');
 }
