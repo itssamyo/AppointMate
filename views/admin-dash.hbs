@@ -8,6 +8,12 @@
                         <strong>Error! </strong> User already exists.
                     </div>
                 {{/if}}
+                {{# if exists}}
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <span>User already exists.</span>
+                    </div>
+                {{/ if}}
             </div>
         </div>
         <div class="row">

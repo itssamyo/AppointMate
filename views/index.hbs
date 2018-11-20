@@ -1,40 +1,45 @@
-
-  <br>
-<div><center><img src="/images/Logo.png" id="logo"/></center></div>
-  <div class="row">
-    <div style="width:500px; margin:0 auto">
-      <p style="color:red">{{error}}</p>
-        	
-        {{# if isErr }}
-          <div class="alert alert-danger">  <strong>{{error}}</strong></div>
-        {{/ if }}
-
-
-
+<div class="row">
+  <div class="col"><br>
+    <center style="height:170px"><img src="/images/Logo.png" id="logo"/></center>
+  </div>
+</div>
+<div class="row" style="width:500px; margin:0 auto; height:60px;">  
+  <div class="col">   
+      {{# if error }}
+        <div class="alert alert-danger alert-dismissible"> 
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+           <strong>Error!&nbsp;</strong>{{ error }}
+        </div>
+      {{/ if }}
+  </div>
+</div> 
+<div class="row">
+  <div class="col-sm-3"></div>
+  <div class="col">
     <form method="POST" action="/login">
       <div id="form-group">
         <label>Email:</label>
-          <input class="form-control" name="email" type="text" />
+          <input class="form-control" name="email" type="email"  required/>
       </div>
       <div id="form-group">
-        <label>Password:</label>
-          <input class="form-control" name="password" type="password" />
+          <label>Password:</label>
+          <input class="form-control" name="password" type="password" required/>
       </div>
       <br/>
       <div style="text-align:center">
-      <div>
-      <input class="btn btn-info" type="submit" value="Log In" id="loginBtn"/>
-      </div>
-      <div>
-      {{!-- <input class="btn btn-info" value="Register" data-toggle="modal" data-target="#myModal" id="registerBtn"> --}}
-      <a href="#"  data-toggle="modal" data-target="#myModal" id="registerBtn">Register</a>
-      </div>
-      
-      </div>
-      
+        <div>
+          <input class="btn btn-info" type="submit" value="Log In" id="loginBtn"/>
+        </div>
+        <div>
+          {{!-- <input class="btn btn-info" value="Register" data-toggle="modal" data-target="#myModal" id="registerBtn"> --}}
+          <br><a href="#"  data-toggle="modal" data-target="#myModal" id="registerBtn">Register</a>
+        </div>        
+      </div>        
     </form>
-    </div>
   </div>
+  <div class="col-sm-3"></div>
+</div>
+
 
   <!-- The Modal -->
   <div class="modal" id="myModal">
