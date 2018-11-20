@@ -1,12 +1,16 @@
 
-    <h3>convener confirm meeting</h3>
     <div class="row">
+        <div class="col">
+            <br><br><h6>UPLOAD ATTENDEES</h6><br>
+        </div>
+    </div>    
+    <div class="row" style=" height: auto; box-shadow: 0px 0px 15px -2px;border-radius:3px;">
         <div class="col">    
-            <form action="/users/conv/uploadattend/{{meetID}}" method="post" enctype="multipart/form-data">
+            <br><form action="/users/conv/uploadattend/{{meetID}}" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <input type="file" name="filetoupload" class="form-control" required>
             </div>        
-                <input type="submit" class="btn btn-success" style="float: right"/>
+                <input type="submit" class="btn btn-success" style="float: right"/><br><br>
             </form>
         </div>
     </div>

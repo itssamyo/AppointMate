@@ -1,7 +1,10 @@
-
+ {{!-- style=" height: auto; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:3px;" --}}
+    <br>
     <div class="row">
-        <div class="col">
-            <h4>Create meeting</h4>    
+        <h6>CREATE MEETING</h6>
+    </div>
+    <div class="row" style=" height: auto; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:3px;">
+        <div class="col"><br>           
             <form action="/users/conv/new-meeting" method="post">
                 <div class="form-group">            
                     <input type="text" class="form-control" name="eventname" placeholder="Event name" required>
@@ -15,6 +18,7 @@
                 <div class="form-group" style="width:300px">
                     <input type="date" name="eventdate" class="form-control" required>
                 </div>   
+                <label for="time-slot">Select your time slots:</label>
                 <div class="form-group">
                     <input type="time" name="s1start" required/>&nbsp
                     <input type="time" name="s1end" required/>
@@ -35,15 +39,16 @@
                     <input type="time" class="t4" name="s4end"/>
                     <a href="#" class="btn btn-success btn-sm t4" id="ad5">add</a><br>
                 </div> 
+                
                 <div class="form-group">
                     <input type="time" class="t5" name="s5start"/>&nbsp
                     <input type="time" class="t5" name="s5end"/>            
                 </div>         
-            <button type="submit" class="btn btn-primary" style="float:right">Submit</button>
+            <button type="submit" class="btn btn-primary" style="float:right">Submit</button><br><br>
             </form>
         </div>
     </div>
-
+<br><br>
 
 <script>
 $(document).ready(function(){

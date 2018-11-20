@@ -88,7 +88,7 @@ router.get('/logout', userController.logout);
 
 // Session checker
 router.get('/', sessionChecker, (req, res) => {   
-    res.render('index', { error: req.session.error});
+    res.render('index', { error: req.session.error, usert: ""});
 });
 
 router.get('/users', sessionChecker, (req, res) => {

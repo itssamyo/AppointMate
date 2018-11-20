@@ -54,10 +54,13 @@
       </div>
     </nav>
     <div class="container">
-      <div class="row">        
+      <div class="row"> 
+        {{# equal usert ""}} 
+        {{ else }}     
         <div class="col-sm-2">
             <img src="/images/Logo.png" style="margin-left:-28px;margin-top:50px" id="logo" width="140px" height=auto/>
         </div>
+        {{/ equal}}
         <div class="col">
           {{{body}}}
         </div>

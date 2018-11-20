@@ -1,24 +1,34 @@
-
     <div class="row">
         <div class="col">
-            <h4>Welcome attendee</h4>
-            <p>Please select your preffered slot for the meeting:</p>
-            <p>(Booked slots cannot be selected)</p>
-            <form action="/attendee/confirm-slot/{{ aid }}/{{ convEmail }}" method="POST">
+            <br><h6>ATTENDEE SLOT SELECTION</h6>
+            <br><p>Please select your preffered slot for the meeting. Booked slots are showed in grey.</p>
+        </div>    
+    </div>
+    <div class="row" style=" height: auto; box-shadow: 0px 0px 15px -2px;border-radius:3px;">
+        <div class="col">                        
+            <br><form action="/attendee/confirm-slot/{{ aid }}/{{ convEmail }}" method="POST">
+                <div class="form-group">
+                    <label for="startTime"><b>START-TIME</b></label>
+                    <label for="startTime" style="padding-left:30px"><b>END-TIME</b></label>
+
+                </div>
                  {{# each slots as |res| }}
                 <div class="radio">           
-                    <label style="border: 1px solid grey; border-radius:5px; padding: 5px;" for="start">{{ res.sStart }}</label>&nbsp;
-                    <span>-</span>&nbsp;
-                    <label style="border: 1px solid grey; border-radius:5px; padding: 5px;" for="end">{{ res.sEnd }}</label>&nbsp;&nbsp;&nbsp;
                     {{# equal res.status "booked"}}
-                        <input type="radio" name="slot" value="{{res.sId}}" disabled>  
+                        <label style=" background-color:gray; border-radius:4px; padding: 5px; margin-left:6px; box-shadow:0px 0px 15px -4px;" for="start">{{ res.sStart }}</label>&nbsp;
+                        <span style="padding-left:14px">-</span>
+                        <label style=" background-color:gray; border-radius:4px; padding: 5px; margin-left:20px; box-shadow:0px 0px 15px -4px;" for="end">{{ res.sEnd }}</label>&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="slot" value="{{res.sId}}" disabled>
                         {{else}}
-                        <input type="radio" name="slot" value="{{res.sId}}">    
-                        {{/equal}}   
+                        <label style=" background-color:#007bff80; border-radius:4px; padding: 5px; margin-left:6px; box-shadow:0px 0px 15px -4px;" for="start">{{ res.sStart }}</label>&nbsp;
+                        <span style="padding-left:14px">-</span>
+                        <label style=" background-color:#007bff80; border-radius:4px; padding: 5px; margin-left:20px; box-shadow:0px 0px 15px -4px;" for="end">{{ res.sEnd }}</label>&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="slot" value="{{res.sId}}"><br><br>
+                    {{/equal}}   
                          </div>
                     {{/each}}                       
                  <br><br>
-                 <button type="submit" class="btn btn-success" style="float:right">Submit Selection</button>
+                 <button type="submit" class="btn btn-success btn-sm" style="float:right">Submit Selection</button><br><br>
             </form>
         </div>
     </div>

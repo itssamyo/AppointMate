@@ -407,8 +407,7 @@ exports.attendee_slot_selec = (req, res, next) =>{
           mId: mid
         }
       }).then(slots=>{
-        // res.json(slots);
-        res.render('attend_slot_selec', { slots, aid, convEmail , usert: req.session.user.uType}) 
+        res.render('attend_slot_selec', { slots, aid, convEmail, usert: ""}) 
       })
     }
   })

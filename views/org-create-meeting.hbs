@@ -1,8 +1,12 @@
 
     <br>
-    <div class="row" style=" height: auto; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:7px;">
-        <div class="col"><br>
-            <h5>CREATE MEETING</h5>  
+    <div class="row">
+        <div class="col">
+            <h6>CREATE MEETING</h6>
+        </div>
+    </div>
+    <div class="row" style=" height: auto; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:3px;">
+        <div class="col"><br>            
             <p style="color: red">{{ error }}</p>
             <form action="/users/org/new-meeting" method="post">
                 <div class="form-group">
@@ -49,7 +53,7 @@
             </form><br><br>
         </div>
     </div>
-
+    <br><br>
 
 <script>
 $(document).ready(function(){
