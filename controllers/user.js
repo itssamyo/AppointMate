@@ -155,7 +155,7 @@ exports.add_user = (req, res, next) => {
             subject: 'Appointmate User Account',
             html: 'Congradulations, a '+ utype +' account has been created for you in Appointmate.'+
             '<br>Please use the following information to login.<br>'+
-            'USERNAME: &nbsp;'+ email + '<br>PASSWORD: &nbsp'+ password,            
+            'USERNAME: &nbsp;'+ email + '<br>PASSWORD: &nbsp;'+ password,            
           };
 
           transporter.sendMail(mailOptions, function(error, info){
