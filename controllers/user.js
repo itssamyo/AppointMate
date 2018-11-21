@@ -3,6 +3,7 @@ var bcrypt = require('bcryptjs');
 var multer = require('multer');
 const Sequelize = require('sequelize');
 var nodemailer = require('nodemailer');
+var config = require('../config/index');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -13,7 +14,8 @@ var storage = multer.diskStorage({
   }
 })
 var upload = multer({ storage: storage });
-var config = require('../config/index');
+
+
 
 
 // Login and Redirect to relevant user page
@@ -265,7 +267,7 @@ exports.org_dash_csv = (req, res, next) => {
       upload(req,res,function(err) {
           if(err) {
               return res.end("Error uploading file.");
-              console.log('error', err);
+              console.log('error: '+err);
               next(err);
           }
           res.end("File is uploaded");
