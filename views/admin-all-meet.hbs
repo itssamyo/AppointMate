@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col">
+        <br><br><h6>REGISTERED MEETINGS</h6><br>
+    </div>
+</div>
+<div class="row" style="height: auto; box-shadow: 0px 0px 15px -2px;border-radius:3px; padding:30px;">
+    <div class="col">
+         <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Index</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Created</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{# each meetings as |res|}}
+            <tr>
+                <td>{{ res.mId }}</td>
+                <td>{{ res.mName }}</td>
+                <td>{{ res.location }}</td>
+                <td>{{ res.mDate }}</td>
+                <td>{{ res.createdAt }}</td>
+            </tr>
+            {{/ each}}
+            </tbody>
+        </table>
+    </div>
+</div>

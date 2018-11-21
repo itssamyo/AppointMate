@@ -14,6 +14,14 @@ const { writeFileSync } = require('fs')
 
 
 
+//Admin view of all meetings
+exports.admin_view_meetings = (req, res, next) => {
+
+  Meeting.findAll().then(meetings=>{
+    res.render('admin-all-meet', { meetings });
+  })
+}
+
 // Render Convener Dashboard
 exports.conv_dash = (req, res, next) => {
 

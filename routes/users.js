@@ -20,6 +20,9 @@ router.get('/admin/dash', userController.admin_list_users);
 // GET request to manage users
 router.get('/admin/manage', userController.admin_manage_users);
 
+// GET request to view all meetings
+router.get('/admin/meetings', meetingController.admin_view_meetings);
+
 // POST request for Adding Users
 router.post('/admin/addUser', userController.add_user);
 
