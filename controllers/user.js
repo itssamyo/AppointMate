@@ -91,21 +91,17 @@ exports.org_session_check = (req, res, next) => {
 
 // List Users on the Admin Dashboard
 exports.admin_list_users = (req, res, next) => {
-  var exists; var nuser;
+  var exists;
   if(req.session.alert){
     exists = req.session.alert;
   }
-  if(req.session.nUser){
-    nuser = req.session.nUser;
-  }
-
   if(req.session.user){
     if(req.session.user.uType =='admin'){
     User.findAll({
         attributes: ['email', 'uFname','uType', 'createdAt']
     }).then(result => {
         console.log(result);
-        res.render('admin-dash', {result, nuser, exists, usert: req.session.user.uType});
+        res.render('admin-dash', {result, exists, usert: req.session.user.uType});
     });
     }
     else{
@@ -159,7 +155,7 @@ exports.add_user = (req, res, next) => {
             subject: 'Appointmate User Account',
             html: 'Congradulations, a '+ utype +' account has been created for you in Appointmate.'+
             '<br>Please use the following information to login.<br>'+
-            'USERNAME: &nbsp;'+ email + '<br>PASSWORD: &nbsp'+ password,            
+            'USERNAME: &nbsp;'+ email + '<br>PASSWORD: &nbsp;'+ password,            
           };
 
           transporter.sendMail(mailOptions, function(error, info){
@@ -169,8 +165,7 @@ exports.add_user = (req, res, next) => {
               console.log('Email sent: ' + info.response);
               
             }
-          })
-        req.session.nUser = true;
+          });
         res.redirect('/users/admin/dash');
       }
   });
