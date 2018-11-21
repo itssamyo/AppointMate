@@ -235,7 +235,7 @@ exports.conv_create_attendees = (req, res, next) =>{
     var newpath = './public/uploads/' + files.filetoupload.name+'-'+Date.now();
     fs.rename(oldpath, newpath, function (err) {
       if (err){
-        throw error
+        throw err
       }
       else{
         var rowNum = 0;
