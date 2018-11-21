@@ -253,11 +253,12 @@ exports.org_dash_csv = (req, res, next) => {
     var upload = multer({ storage : storage}).single('csvFile');
       upload(req,res,function(err) {
           if(err) {
-              return res.end("Error uploading file.");
-              console.log('error', err);
-              next(err);
+              res.json(err);
           }
+        else{
           res.end("File is uploaded");
+        }
+        
       });
   };
   
