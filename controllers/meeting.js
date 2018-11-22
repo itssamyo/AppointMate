@@ -316,7 +316,6 @@ exports.conv_create_attendees = (req, res, next) =>{
       // res.write('File uploaded and moved!');
     })
 
-})
 },
 
 exports.conv_manage_meeting = (req, res, next) => {
