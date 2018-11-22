@@ -20,11 +20,11 @@ User.sync().then(()=>{
             const x = bcrypt.hashSync('1234');
             User.findOrCreate({
                 where: {
-                    email: 'john@mail.com'
+                    email: 'admin@mail.com'
                   }, 
                 defaults: {
-                  uFname: 'john',
-                  uLname: 'nhoj',
+                  uFname: 'admin',
+                  uLname: 'admin',
                   password: x,
                   uType: 'admin'
                   }
