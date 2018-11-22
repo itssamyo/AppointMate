@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>{{title}}</title>
-    <link href="stylesheets/style.css" rel="stylesheet" type="text/css">
+    <link href="/stylesheets/style.css" rel="stylesheet" type="text/css">
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">  
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>  
@@ -56,9 +56,12 @@
             <a class="nav-link" href="#" style="color:white"><i class="fas fa-user"></i>&nbsp;Administrator</a>
           </li>
           {{/ equal}}
+          {{# equal usert ""}}
+          {{ else }}
           <li class="nav-item">                     
             <a class="nav-link" href="/logout" style="color:white"><i class="fas fa-sign-out-alt"></i>Logout</a>
           </li>
+          {{/ equal}}
         </ul>
       </div>
     </nav>
@@ -73,8 +76,47 @@
         <div class="col">
           {{{body}}}
         </div>
+      </div>            
+    </div>
+    <div class="container-fluid" style="padding: 0px">
+      <div class="row">
+        <div class="col">
+          <footer class="footer-distributed">
+            <div class="footer-left">
+              <h3>AppointMate</h3>				
+              {{!-- <p class="footer-links">
+              <img src="/images/Logo.png" style="margin-left:50px" id="logo" width="30px" height=auto/>                  
+              </p> --}}
+              <br>
+              <p class="footer-company-name">AppointMate &copy; 2018</p>
+            </div>
+            <div class="footer-center">
+              <div>
+                <i class="fa fa-map-marker"></i>
+                <p><span>8 Wilkie Rd, Singapore 228095</span> Singapore, Singapore</p>
+              </div>
+              <div>
+                <i class="fa fa-phone"></i>
+                <p>+65 987654321</p>
+              </div>
+              <div>
+                <i class="fa fa-envelope"></i>
+                <p><a href="mailto:support@company.com">admin@appointmate.com</a></p>
+              </div>
+            </div>
+
+            <div class="footer-right">
+              <p class="footer-company-about">
+                <span>About Us</span>
+                AppointMate is a free to use web application developed for Murdoch University to act as a meeting booking application where academic staff can use the system to arrange one on one or group meetings with students.
+              </p>
+              <div class="footer-icons">                                   
+              </div>
+            </div>
+
+	      	</footer>
+        </div>
       </div>
-      
     </div>
   </body>
   
