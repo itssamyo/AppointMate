@@ -11,7 +11,11 @@
      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   </head>
+  {{# equal usert ""}}
+  <body style="background:url(/images/back.jpg)">
+  {{ else }}
   <body>
+  {{/ equal}}
     <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="background-color:#232f3e!important;border-radius:0px">
       <a class="navbar-brand" href="/users">Appointmate</a>
       <ul class="navbar-nav">
