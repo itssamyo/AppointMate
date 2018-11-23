@@ -102,10 +102,12 @@ router.post('/attendee/confirm-slot/:aid/:conv', meetingController.attendee_conf
 // router.get('/testtoken', meetingController.test_token);
 // router.get('/testmail', meetingController.test_mail);
 // router.get('/testics', meetingController.test_ics);
+//router.post('/testupload', userController.org_dash_csv);
+router.get('/testfile', function(req, res, next){
+    res.render('attend-succ-booked');
+})
 
-router.post('/testupload', userController.org_dash_csv);
-
-router.get('/*', function(req, res, next){
+router.get('/*', function(req, res, next){ 
     if(req.session.user){
         next();
     }

@@ -407,7 +407,8 @@ exports.attendee_slot_selec = (req, res, next) =>{
   }).then(fslot=>{
 
     if(fslot != null){
-      res.send('Sorry, you have already confirmed your slot');
+      // res.send('Sorry, you have already confirmed your slot');
+      res.render('attend-slot-booked');
     }
     else{
       Slot.findAll({
