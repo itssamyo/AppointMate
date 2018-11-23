@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const UserMeet = require('../models/usermeeting');
 var bcrypt = require('bcryptjs');
 var multer = require('multer');
 const Sequelize = require('sequelize');
@@ -175,14 +176,33 @@ exports.add_user = (req, res, next) => {
 
 exports.delete_user = (req, res, next) => {
     var email = req.body.email;
-    User.destroy({
+    User.findOne({
         where: {
             email: email
         }
-    }).then(result=>{
-        console.log(result);
-        res.redirect('/users/admin/manage');
+    }).then(user=>{
+        UserMeet.findAll({
+            where:{
+                uId: user.uId
+            }
+        }).then(user=>{
+            if(user == ""){
+                User.destroy({
+                    where: {
+                        email: email
+                    }
+                }).then(result=>{
+                    console.log(result);
+                    res.redirect('/users/admin/manage');
+                })
+            }
+            else{
+                res.send('Cannot delete User with Meetings');
+            }
+        })
     })
+    
+    
 
 },
 
