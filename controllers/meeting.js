@@ -414,7 +414,7 @@ exports.attendee_slot_selec = (req, res, next) =>{
 
     if(fslot != null){
       // res.send('Sorry, you have already confirmed your slot');
-      res.render('attend-slot-booked');
+      res.render('attend-slot-booked', { usert: "" });
     }
     else{
       Slot.findAll({
@@ -569,7 +569,7 @@ exports.attendee_confirm_slot = (req, res, next) => {
                       }
                     });
 
-                    res.send('Thank you for your time. Please close the tab');
+                    res.render('attend-succ-booked', { usert: "" })
                   }
                 })
               })

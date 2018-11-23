@@ -103,8 +103,9 @@ router.post('/attendee/confirm-slot/:aid/:conv', meetingController.attendee_conf
 // router.get('/testmail', meetingController.test_mail);
 // router.get('/testics', meetingController.test_ics);
 //router.post('/testupload', userController.org_dash_csv);
+
 router.get('/testfile', function(req, res, next){
-    res.render('attend-succ-booked');
+    res.render('attend-slot-booked');
 })
 
 router.get('/*', function(req, res, next){ 
