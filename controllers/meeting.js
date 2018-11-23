@@ -377,7 +377,7 @@ exports.conv_confirm_meeting = (req, res, next) =>{
           html: '<b>MEETING INFORMATION</b> <br><br> NAME: &nbsp;'
           + meeting.mName + '<br> DESCRIPTION: &nbsp;' + meeting.mDesc + '<br> LOCATION: &nbsp;' + meeting.location
           + '<br>DATE: &nbsp;'+ meeting.mDate + ' <br> Please open the following link to select your time slot: <br>'
-          + 'http://localhost:3000/attendee/'+token
+          + config.surl+'/attendee/'+token
         };
         console.log('sending to attendee email: '+attendEmail);
         transporter.sendMail(mailOptions, function(error, info){
@@ -832,16 +832,18 @@ exports.org_create_meeting = (req, res, next) =>{
     // console.log('meeting id: '+ req.params.meetID);
     var meetID = req.params.meetID;
     var form = new formidable.IncomingForm();
-    form.parse(req, function (err, fields, files) {
+    form.parse(req, function (err, fields, files) 
+    {
       var oldpath = files.filetoupload.path;
-      var newpath = './public/uploads/' + files.filetoupload.name+'-'+Date.now();
-      fs.rename(oldpath, newpath, function (err) {
-        if (err){
-          throw err;
-        }
-        else{
+      // var newpath = './public/uploads/' + files.filetoupload.name+'-'+Date.now();
+      // fs.rename(oldpath, newpath, function (err) 
+      // {
+      //   if (err){
+      //     throw err;
+      //   }
+      //   else{
           var rowNum = 0;
-          let csvStream = csv.fromPath(newpath, { headers: true })
+          let csvStream = csv.fromPath(oldpath, { headers: true })
           .on('data', function(record){
 
             rowNum+=1;
@@ -851,7 +853,7 @@ exports.org_create_meeting = (req, res, next) =>{
             console.log('--ROW NUM: '+rowNum);
 
             var count = 0;
-            let csvStream = csv.fromPath(newpath, { headers: true })
+            let csvStream = csv.fromPath(oldpath, { headers: true })
             .on('data', function(record){
 
                   csvStream.pause();
@@ -873,7 +875,7 @@ exports.org_create_meeting = (req, res, next) =>{
                   }).then(()=>{
                     if(count == rowNum){
                       try {
-                        fs.unlinkSync(newpath);
+                        fs.unlinkSync(oldpath);
                         console.log('--successfully deleted csv file');
                       } catch (err) {
                         console.log('Error removing csv file');
@@ -890,10 +892,10 @@ exports.org_create_meeting = (req, res, next) =>{
           }).on('error', function(err){
             console.log(err);
           });
-        }
-      })
+      //   }
+      // })
 
-  })
+    })
   },
 
   exports.org_manage_meeting = (req, res, next) => {
@@ -958,7 +960,7 @@ exports.org_create_meeting = (req, res, next) =>{
             html: '<b>MEETING INFORMATION</b><br> NAME: &nbsp;'
             + meeting.mName + '<br> DESCRIPTION: &nbsp;' + meeting.mDesc + '<br> LOCATION: &nbsp;' + meeting.location
             + '<br>DATE: &nbsp;'+ meeting.mDate + ' <br> Please open the following link to select your time slot: <br>'
-            + 'http://localhost:3000/attendee/'+token
+            + config.surl+'/attendee/'+token
           };
 
           transporter.sendMail(mailOptions, function(error, info){
