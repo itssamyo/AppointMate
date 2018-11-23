@@ -240,67 +240,73 @@ exports.conv_create_attendees = (req, res, next) =>{
   var form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
     var oldpath = files.filetoupload.path;
-    var newpath = './public/uploads/' + files.filetoupload.name+'-'+Date.now();
-    fs.rename(oldpath, newpath, function (err) {
-      if (err){
-        throw err
-      }
-      else{
-        var rowNum = 0;
-    let csvStream = csv.fromPath(newpath, { headers: true })
-    .on('data', function(record){
+    // var newpath = './public/uploads/' + files.filetoupload.name+'-'+Date.now();
+    // console.log('oldpath: '+oldpath);
+    // console.log('newpath: '+newpath);
+    // fs.rename(oldpath, newpath, function (err) {
+          // if (err){
+          //   throw err
+          // }
+          // else
+          // {
+            var rowNum = 0; const fileRows = [];
+            let csvStream = csv.fromPath(oldpath, { headers: true })
+             .on('data', function(record){
+            fileRows.push(record);
 
-      rowNum+=1;
+             rowNum+=1;
 
-    }).on('end', function(){
-      console.log('job done');
-      console.log('--ROW NUM: '+rowNum);
+              })
+              .on('end', function()
+              {
 
-      var count = 0;
-      let csvStream = csv.fromPath(newpath, { headers: true })
-       .on('data', function(record){
+                var count = 0;
+                let csvStream = csv.fromPath(oldpath, { headers: true })
+                .on('data', function(record)
+                {
 
-            csvStream.pause();
-            Attendee.findOrCreate({
-              where: {
-                aEmail: record.email,
-                mId: meetID
-              }, defaults: {
-                aFname: record.firstname,
-                aLname: record.lastname
-              }
-            }).spread((attendee, created) => {
-              console.log(attendee.get({
-                plain: true
-              }))
-              console.log('created:'+ created)
-              count+=1;
+                      csvStream.pause();
+                      Attendee.findOrCreate({
+                        where: {
+                          aEmail: record.email,
+                          mId: meetID
+                        }, defaults: {
+                          aFname: record.firstname,
+                          aLname: record.lastname
+                        }
+                      }).spread((attendee, created) => {
+                        console.log(attendee.get({
+                          plain: true
+                        }))
+                        console.log('created:'+ created)
+                        count+=1;
 
-            }).then(()=>{
-              if(count == rowNum){
-                try {
-                  fs.unlinkSync(newpath);
-                  console.log('--successfully deleted csv file');
-                } catch (err) {
-                  console.log('Error removing csv file');
-                }
-                req.session.meetID = meetID;
-                res.redirect('/users/conv/manage-meet');
-              }
-            })
-            csvStream.resume();
+                      }).then(()=>{
+                        if(count == rowNum){
+                          try {
+                            fs.unlinkSync(oldpath);
+                            console.log('--successfully deleted csv file');
+                          } catch (err) {
+                            console.log('Error removing csv file');
+                          }
+                          req.session.meetID = meetID;
+                          res.redirect('/users/conv/manage-meet');
+                        }
+                      })
+                      csvStream.resume();
 
-      }).on('error', function(err){
-        console.log(err);
-      });
+              })
+              .on('error', function(err){
+                console.log(err);
+              });
 
 
-    }).on('error', function(err){
-      console.log(err);
-    });
-      }
-      // res.write('File uploaded and moved!');
-    })
+            }).on('error', function(err){
+              console.log(err);
+            });
+          // }
+          // res.write('File uploaded and moved!');
+    // })
 
 })
 },
