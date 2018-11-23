@@ -241,27 +241,12 @@ exports.conv_create_attendees = (req, res, next) =>{
   form.parse(req, function (err, fields, files) {
     var oldpath = files.filetoupload.path;
     var newpath = './public/uploads/' + files.filetoupload.name+'-'+Date.now();
-
-    fs.readFile(oldpath, function (err, data) {
-        if (err) throw err;
-        console.log('File read!');
-
-        // Write the file
-        fs.writeFile(newpath, data, function (err) {
-            if (err) throw err;
-            res.write('File uploaded and moved!');
-            res.end();
-            console.log('File written!');
-        });
-
-        // Delete the file
-        fs.unlink(oldpath, function (err) {
-            if (err) throw err;
-            console.log('File deleted!');
-        });
-    });
-
-    var rowNum = 0;
+    fs.rename(oldpath, newpath, function (err) {
+      if (err){
+        throw err
+      }
+      else{
+        var rowNum = 0;
     let csvStream = csv.fromPath(newpath, { headers: true })
     .on('data', function(record){
 
@@ -313,9 +298,11 @@ exports.conv_create_attendees = (req, res, next) =>{
     }).on('error', function(err){
       console.log(err);
     });
+      }
       // res.write('File uploaded and moved!');
     })
 
+})
 },
 
 exports.conv_manage_meeting = (req, res, next) => {
@@ -386,7 +373,7 @@ exports.conv_confirm_meeting = (req, res, next) =>{
           + '<br>DATE: &nbsp;'+ meeting.mDate + ' <br> Please open the following link to select your time slot: <br>'
           + 'http://localhost:3000/attendee/'+token
         };
-
+        console.log('sending to attendee email: '+attendEmail);
         transporter.sendMail(mailOptions, function(error, info){
           if (error) {
             console.log('email-send-error-to: '+attendEmail+' : '+error);
