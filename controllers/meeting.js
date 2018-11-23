@@ -373,7 +373,7 @@ exports.conv_confirm_meeting = (req, res, next) =>{
           + '<br>DATE: &nbsp;'+ meeting.mDate + ' <br> Please open the following link to select your time slot: <br>'
           + 'http://localhost:3000/attendee/'+token
         };
-
+        console.log('sending to attendee email: '+attendEmail);
         transporter.sendMail(mailOptions, function(error, info){
           if (error) {
             console.log('email-send-error-to: '+attendEmail+' : '+error);
