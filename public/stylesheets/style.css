@@ -1,7 +1,24 @@
 
 /*-- Background wallpaper--*/
 /* body{background:url(/images/back.jpg)} */
+.bgw{
+	background-color: white;
+}
 
+.btn-success{
+    background-color: #28a745b0!important;
+    border-color: #28a745b0!important;
+}
+/* //007bffa8 */
+.btn-primary{
+    background-color: #007bffa8!important;
+    border-color: #007bffa8!important;
+}
+/* dc3545a8 */
+.btn-danger{
+	background-color: #dc3545a8!important;
+    border-color: #dc3545a8!important;
+}
 #logo
  {
     opacity: 0.7;
@@ -19,7 +36,7 @@
 #loginBtn
 {
     border-radius: 8px;
-    background-color:#232f3e;
+    background-color:#d66167;
     color:white;
     font-weight:800px;
     font-size:18px;

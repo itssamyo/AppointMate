@@ -21,10 +21,10 @@
                 <img src="/images/Logo.png" style="margin-left:-28px" id="logo" width="140px" height=auto/>
             </div> --}}
             <div class="col">
-            <div class="row" style="height: auto; box-shadow: 0px 0px 15px -2px;border-radius:3px; padding:30px;">  
+            <div class="row bgw" style=" height: auto; box-shadow: 0px 0px 15px -2px;border-radius:3px; padding:30px;">  
                 <div class="col">      
                     <h6>NEW USER</h6>   
-                    <form action="/users/admin/addUser" method="POST">
+                    <form action="/users/admin/addUser" id="addUser" method="POST">
                             <div class="form-group">
                                 <input type="email" name="email" class="form-control" placeholder="email" required>
                             </div>
@@ -47,13 +47,13 @@
                             </select>
                             </div>
 
-                        <button type="submit" class="btn btn-success" style="float:right" id="#adduser">Add User</button>
+                        <button type="submit" class="btn btn-success" style="float:right" id="#adduser">Add User</button>                        
                     </form>
                 </div> 
             </div>
             <br>
             <br>&nbsp;&nbsp;<h6>USER ACCOUNTS</h6>
-            <div class="row" style=" height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:3px;">        
+            <div class="row bgw" style="background-color:white; height: 300px; overflow: scroll; box-shadow: 0px 0px 15px -2px;border-radius:3px;">        
                 <table class="table table-hover">
                     <thead>
                     <tr>

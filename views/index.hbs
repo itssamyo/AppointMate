@@ -16,7 +16,7 @@
 <div class="row">
   <div class="col-sm-3"></div>
   <div class="col">
-    <form method="POST" action="/login">
+    <form method="POST" id="loginForm" action="/login">
       <div id="form-group">
         <label>Email:</label>
           <input class="form-control" name="email" type="email"  required/>
@@ -28,11 +28,10 @@
       <br/>
       <div style="text-align:center">
         <div>
-          <input class="btn btn-info" type="submit" value="Log In" id="loginBtn"/>
+          <button class="btn btn-info" type="submit" id="loginBtn"/>Log In</button>          
         </div>
-        <div>
-          {{!-- <input class="btn btn-info" value="Register" data-toggle="modal" data-target="#myModal" id="registerBtn"> --}}
-          <br><a href="#"  data-toggle="modal" data-target="#myModal" id="registerBtn">Register</a>
+        <div>          
+          <a href="#"  data-toggle="modal" data-target="#myModal" id="registerBtn">Register</a>
         </div>        
       </div>        
     </form>
