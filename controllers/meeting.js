@@ -638,11 +638,11 @@ exports.conv_post_auth_org = (req, res, next) => {
         date: fields.eventdate
       }
       var oldpath = files.filetoupload.path;
-      var newpath = './public/uploads/Attendees'+Date.now()+'.csv';
+      // var newpath = './public/uploads/Attendees'+Date.now()+'.csv';
 
-      fs.rename(oldpath, newpath, function (err) {
-        if (err) throw err;
-      });
+      // fs.rename(oldpath, newpath, function (err) {
+      //   if (err) throw err;
+      // });
 
       User.findOne({
         where: {
@@ -664,7 +664,7 @@ exports.conv_post_auth_org = (req, res, next) => {
             + '<br><b>NAME</b>: &nbsp; &nbsp;' + inp.eventname + '<br><b>LOCATION</b>: &nbsp; &nbsp;' + inp.location + '<br><b>DESCRIPTION</b>: &nbsp; &nbsp;'
             + inp.description + '<br><b>DATE</b>: &nbsp; &nbsp;' + inp.date + '<br>Please use the attached Attendee list to create the meeting. </span>',
             attachments: [{
-              path: newpath
+              path: oldpath
             }]
           };
 
