@@ -412,8 +412,7 @@ exports.attendee_slot_selec = (req, res, next) =>{
     }
   }).then(fslot=>{
 
-    if(fslot != null){
-      // res.send('Sorry, you have already confirmed your slot');
+    if(fslot != null){      
       res.render('attend-slot-booked', { usert: "" });
     }
     else{
@@ -427,7 +426,13 @@ exports.attendee_slot_selec = (req, res, next) =>{
           res.render('attend-all-booked', { usert: "" });
         }
         else{
-          res.render('attend_slot_selec', { slots, aid, convEmail, usert: ""});
+          Slot.findAll({
+            where: {
+              mId: mid
+            }
+          }).then(slots=>{
+            res.render('attend_slot_selec', { slots, aid, convEmail, usert: ""});
+          })          
         }         
       })
     }
