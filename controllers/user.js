@@ -156,7 +156,7 @@ exports.add_user = (req, res, next) => {
         var mailOptions = {
             to: email,
             subject: 'Appointmate User Account',
-            html: 'Congradulations, a '+ utype +' account has been created for you in Appointmate.'+
+            html: 'Congratulations, a '+ utype +' account has been created for you in Appointmate.'+
             '<br>Please use the following information to login.<br>'+
             'USERNAME: &nbsp;'+ email + '<br>PASSWORD: &nbsp;'+ password,            
           };
@@ -197,7 +197,9 @@ exports.delete_user = (req, res, next) => {
                 })
             }
             else{
-                res.send('Cannot delete User with Meetings');
+                // res.send('Cannot delete User with Meetings');
+                req.session.alert = 'Cannot delete user with Meetings';
+                res.redirect('/users/admin/manage');
             }
         })
     })
@@ -256,13 +258,17 @@ exports.conv_dash = (req, res, next) => {
 
 // Admin user management
 exports.admin_manage_users = (req, res, next) => {
+    var alert = false;
+    if(req.session.alert){
+        alert = true;
+    }
      User.findAll({where: {uType : 'convener'},
             attributes: ['email', 'uFname', 'uLname', 'uType', 'createdAt']
         }).then(convener => {
             User.findAll({where: {uType: 'organiser'},
             attributes: ['email', 'uFname','uLname', 'uType', 'createdAt']
             }).then(organiser =>{
-                res.render('admin-manage', {convener, organiser, usert: req.session.user.uType});
+                res.render('admin-manage', {convener, organiser, usert: req.session.user.uType, alert});
             });
 
         });
