@@ -3,6 +3,7 @@
 /* body{background:url(/images/back.jpg)} */
 .bgw{
 	background-color: white;
+	border-radius:25px!important;
 }
 
 .btn-success{
