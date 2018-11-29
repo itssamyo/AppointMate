@@ -426,13 +426,14 @@ exports.attendee_slot_selec = (req, res, next) =>{
           res.render('attend-all-booked', { usert: "" });
         }
         else{
-          Slot.findAll({
-            where: {
-              mId: mid
-            }
-          }).then(slots=>{
             res.render('attend_slot_selec', { slots, aid, convEmail, usert: ""});
-          })          
+          // Slot.findAll({
+          //   where: {
+          //     mId: mid
+          //   }
+          // }).then(slots=>{
+          //   res.render('attend_slot_selec', { slots, aid, convEmail, usert: ""});
+          // })          
         }         
       })
     }
